@@ -1,0 +1,163 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TLC_Yemba.Site" %>
+<!DOCTYPE html>
+<html lang="fr">
+<head runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TLC Yemba Online Test – Test de Langue du Camerounais. Évaluez votre maîtrise de la langue Yemba." />
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server">TLC Yemba Online Test</asp:ContentPlaceHolder>
+    </title>
+
+    <%-- CSS principal --%>
+    <link rel="stylesheet" href="~/Content/Style.css" />
+
+    <%-- Espace pour les CSS additionnels par page --%>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body>
+<div class="page-wrapper">
+
+    <%-- ══════════ HEADER / NAVIGATION ══════════ --%>
+    <header class="site-header">
+        <div class="container">
+            <nav class="nav-inner">
+
+                <%-- Logo --%>
+                <a href="~/Default.aspx" runat="server" class="nav-logo">
+                    <div class="nav-logo-icon">🌿</div>
+                    <div>
+                        <div class="nav-logo-title">TLC Yemba</div>
+                        <div class="nav-logo-subtitle">Online Test</div>
+                    </div>
+                </a>
+
+                <%-- Liens de navigation --%>
+                <ul class="nav-links" id="navMenu">
+                    <li>
+                        <a href="~/Default.aspx" runat="server"
+                           class='<%# IsCurrentPage("Default.aspx") ? "active" : "" %>'>
+                           🏠 Accueil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Pages/ChoixTest.aspx" runat="server"
+                           class='<%# IsCurrentPage("ChoixTest.aspx") ? "active" : "" %>'>
+                           📝 Passer un test
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Pages/Historique.aspx" runat="server"
+                           class='<%# IsCurrentPage("Historique.aspx") ? "active" : "" %>'>
+                           📋 Mes résultats
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Pages/Leaderboard.aspx" runat="server"
+                           class='<%# IsCurrentPage("Leaderboard.aspx") ? "active" : "" %>'>
+                           🏆 Classement
+                        </a>
+                    </li>
+
+                    <%-- Bouton connexion / nom de l'utilisateur --%>
+                    <li>
+                        <asp:LoginView ID="LoginView1" runat="server">
+                            <AnonymousTemplate>
+                                <a href="~/Auth/Login.aspx" runat="server" class="nav-cta">
+                                    🔑 Connexion
+                                </a>
+                            </AnonymousTemplate>
+                            <LoggedInTemplate>
+                                <span class="nav-link" style="color: #8BC34A;">
+                                    👤 <asp:LoginName ID="LoginName1" runat="server" />
+                                </span>
+                                &nbsp;
+                                <a href="~/Auth/Logout.aspx" runat="server" class="nav-link" style="color:#E07050;">
+                                    Déconnexion
+                                </a>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
+                    </li>
+                </ul>
+
+                <%-- Bouton burger mobile --%>
+                <button class="nav-burger" id="burgerBtn" aria-label="Menu" onclick="toggleMenu()">
+                    <span></span><span></span><span></span>
+                </button>
+
+            </nav>
+        </div>
+    </header>
+
+    <%-- ══════════ CONTENU PRINCIPAL ══════════ --%>
+    <main class="main-content">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </main>
+
+    <%-- ══════════ FOOTER ══════════ --%>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+
+                <div>
+                    <div class="footer-brand-title">🌿 TLC Yemba</div>
+                    <p class="footer-brand-text">
+                        Plateforme de test en ligne pour la langue Yemba du Cameroun.
+                        Préservation et valorisation du patrimoine linguistique camerounais.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="footer-heading">Navigation</div>
+                    <ul class="footer-links">
+                        <li><a href="~/Default.aspx" runat="server">Accueil</a></li>
+                        <li><a href="~/Pages/ChoixTest.aspx" runat="server">Passer un test</a></li>
+                        <li><a href="~/Pages/Historique.aspx" runat="server">Mes résultats</a></li>
+                        <li><a href="~/Pages/Leaderboard.aspx" runat="server">Classement</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="footer-heading">Sections TLC</div>
+                    <ul class="footer-links">
+                        <li><a href="~/Pages/ChoixTest.aspx?type=Listening" runat="server">👂 Listening</a></li>
+                        <li><a href="~/Pages/ChoixTest.aspx?type=Structure" runat="server">📐 Structure</a></li>
+                        <li><a href="~/Pages/ChoixTest.aspx?type=Reading" runat="server">📖 Reading</a></li>
+                        <li><a href="~/Pages/ChoixTest.aspx?type=Full+Test" runat="server">⭐ Full Test</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 TLC Yemba Online Test — Projet DPW</span>
+                <span>ASP.NET Web Forms · SQL Server · ADO.NET</span>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<%-- ══════════ SCRIPTS ══════════ --%>
+<script>
+    // Menu burger mobile
+    function toggleMenu() {
+        var menu = document.getElementById('navMenu');
+        menu.classList.toggle('open');
+    }
+
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener('click', function(e) {
+        var nav = document.getElementById('navMenu');
+        var btn = document.getElementById('burgerBtn');
+        if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+            nav.classList.remove('open');
+        }
+    });
+</script>
+
+<%-- Espace pour les scripts additionnels par page --%>
+<asp:ContentPlaceHolder ID="ScriptContent" runat="server" />
+
+</body>
+</html>
