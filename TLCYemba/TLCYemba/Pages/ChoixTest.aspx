@@ -117,6 +117,9 @@
         </div>
     </section>
 
+    <asp:Label ID="lblNbQuestions" runat="server" Visible="false" />
+    <asp:Label ID="lblNbCandidats" runat="server" Visible="false" />
+
 </asp:Content>
 
 <%-- ══════════ SCRIPTS ══════════ --%>
