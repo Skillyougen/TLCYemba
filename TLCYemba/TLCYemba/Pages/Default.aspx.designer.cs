@@ -1,14 +1,26 @@
-﻿// ─────────────────────────────────────────────────────────────
-//  FICHIER AUTO-GÉNÉRÉ — Default.aspx.designer.cs
-// ─────────────────────────────────────────────────────────────
-using System.Web.UI.WebControls;
+﻿//------------------------------------------------------------------------------
+// <généré automatiquement>
+//     Ce code a été généré par un outil.
+//
+//     Les changements apportés à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
+//     le code est régénéré.
+// </généré automatiquement>
+//------------------------------------------------------------------------------
 
-namespace TLC_Yemba
+namespace TLCYemba
 {
+
+
     public partial class Default
     {
-        protected global::System.Web.UI.WebControls.Panel pnlBienvenue;
-        protected global::System.Web.UI.WebControls.Label lblNomUtilisateur;
-        protected global::System.Web.UI.WebControls.Label lblDernierScore;
+
+        /// <summary>
+        /// Contrôle form1.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
     }
 }
