@@ -1,99 +1,107 @@
 using System;
-using System.Data;
-using TLC_Yemba.Helpers;
+using TLCYemba.BLL;
 
-namespace TLC_Yemba.Pages
+namespace TLCYemba
 {
     /// <summary>
-    /// Code-behind de ChoixTest.aspx
-    /// Responsabilités :
-    ///   - Lire le type de test choisi par l'utilisateur
-    ///   - Valider le choix
-    ///   - Stocker le choix en Session
-    ///   - Rediriger vers Test.aspx
+    /// Page de sélection du type de test — Couche UI.
+    /// Règle d'or : la UI appelle uniquement la BLL, jamais la DAL directement.
     /// </summary>
     public partial class ChoixTest : System.Web.UI.Page
     {
-        // Durées affichées dans le résumé (cohérent avec la BDD)
-        private readonly System.Collections.Generic.Dictionary<string, string> _durees =
-            new System.Collections.Generic.Dictionary<string, string>
-            {
-                { "Listening", "35 minutes · 50 questions" },
-                { "Structure", "25 minutes · 40 questions" },
-                { "Reading",   "55 minutes · 50 questions" },
-                { "Full Test", "115 minutes · 140 questions" }
-            };
+        // ── Service BLL ──
+        private readonly ChoixTestService _service = new ChoixTestService();
 
-        // TestID correspondants dans la BDD (table Tests)
-        private readonly System.Collections.Generic.Dictionary<string, int> _testIds =
-            new System.Collections.Generic.Dictionary<string, int>
-            {
-                { "Listening", 1 },
-                { "Structure", 2 },
-                { "Reading",   3 },
-                { "Full Test", 4 }
-            };
-
+        // ────────────────────────────────────────────────
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Pré-sélection via QueryString : ChoixTest.aspx?type=Structure
-                string typeParam = Request.QueryString["type"];
-                if (!string.IsNullOrEmpty(typeParam) && _durees.ContainsKey(typeParam))
+                // Pré-sélectionner depuis QueryString si l'utilisateur vient
+                // de la page d'accueil avec un ?section=Listening, etc.
+                string section = Request.QueryString["section"];
+                if (!string.IsNullOrEmpty(section))
                 {
-                    hdnTypeTest.Value = typeParam;
-                    AfficherResume(typeParam);
+                    PreselectionnerDepuisQueryString(section);
+                }
+            }
+        }
+
+        // ────────────────────────────────────────────────
+        /// <summary>
+        /// Clic sur « Commencer le Test ».
+        /// Délègue la validation et le stockage en session à la BLL.
+        /// </summary>
+        protected void btnCommencer_Click(object sender, EventArgs e)
+        {
+            // Récupérer la valeur du radio sélectionné
+            string typeTest = GetSelectedRadioValue();
+
+            // Valider via BLL
+            string erreur = _service.ValiderChoix(typeTest);
+            if (!string.IsNullOrEmpty(erreur))
+            {
+                AfficherErreur(erreur);
+                return;
+            }
+
+            // Stocker le choix en session via BLL
+            _service.EnregistrerChoixEnSession(Session, typeTest);
+
+            // Redirection vers la page de test
+            Response.Redirect("Test.aspx");
+        }
+
+        // ── Helpers privés ──────────────────────────────
+
+        /// <summary>
+        /// Lit la valeur du groupe de radios côté serveur.
+        /// Les radios sont nommés "typeTest" (attribut name en HTML).
+        /// </summary>
+        private string GetSelectedRadioValue()
+        {
+            return Request.Form["typeTest"];
+        }
+
+        /// <summary>
+        /// Pré-coche le radio correspondant au paramètre QueryString
+        /// et marque le bouton comme actif.
+        /// </summary>
+        private void PreselectionnerDepuisQueryString(string section)
+        {
+            string[] valides = { "Listening", "Structure", "Reading", "FullTest" };
+            foreach (string v in valides)
+            {
+                if (string.Equals(v, section, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Injecter un script JS pour déclencher selectCard côté client
+                    string[] labels = {
+                        "Listening — Compréhension Orale",
+                        "Structure — Grammaire",
+                        "Reading — Compréhension Écrite",
+                        "Test Complet TLC"
+                    };
+                    string[] icons = { "🎧", "📝", "📖", "🏆" };
+                    string[] cardIds = { "cardListening", "cardStructure", "cardReading", "cardFullTest" };
+
+                    int idx = Array.IndexOf(valides, v);
+                    string script = string.Format(
+                        "window.addEventListener('DOMContentLoaded', function(){{ selectCard('{0}','{1}','{2}','{3}'); }});",
+                        v, cardIds[idx], icons[idx], labels[idx]
+                    );
+                    ClientScript.RegisterStartupScript(GetType(), "preselectSection", script, true);
+                    break;
                 }
             }
         }
 
         /// <summary>
-        /// Gestionnaire du bouton "Démarrer le test".
-        /// Valide le choix, stocke en Session et redirige vers Test.aspx.
+        /// Affiche le message d'erreur côté serveur.
         /// </summary>
-        protected void btnDemarrer_Click(object sender, EventArgs e)
+        private void AfficherErreur(string message)
         {
-            string typeChoisi = hdnTypeTest.Value?.Trim();
-
-            // ── Validation ────────────────────────────────────────
-            if (string.IsNullOrEmpty(typeChoisi) || !_durees.ContainsKey(typeChoisi))
-            {
-                pnlErreur.Visible  = true;
-                lblErreur.Text     = "Veuillez sélectionner un type de test avant de continuer.";
-                pnlResume.Visible  = false;
-                return;
-            }
-
-            pnlErreur.Visible = false;
-
-            // ── Stockage en Session ───────────────────────────────
-            Session["TypeTest"] = typeChoisi;
-            Session["TestID"]   = _testIds[typeChoisi];
-
-            // Initialiser les variables de test pour la Partie 3
-            Session["IndexQuestion"]  = 0;
-            Session["ReponsesTest"]   = null; // sera initialisé dans Test.aspx
-            Session["HeureDebutTest"] = DateTime.Now;
-
-            // ── Afficher le résumé (feedback visuel avant redirect) ─
-            AfficherResume(typeChoisi);
-
-            // ── Redirection vers Test.aspx ────────────────────────
-            Response.Redirect("~/Pages/Test.aspx");
-        }
-
-        /// <summary>
-        /// Affiche le panneau de résumé avec le type et la durée sélectionnés.
-        /// </summary>
-        private void AfficherResume(string typeTest)
-        {
-            if (_durees.ContainsKey(typeTest))
-            {
-                pnlResume.Visible     = true;
-                lblResumeType.Text    = typeTest;
-                lblResumeDuree.Text   = _durees[typeTest];
-            }
+            //lblErreur.Text    = "⚠️ " + message;
+            //lblErreur.Visible = true;
         }
     }
 }

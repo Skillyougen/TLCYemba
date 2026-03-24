@@ -77,6 +77,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\ChoixTestService.cs" />
     <Compile Include="BLL\ScoreService.cs" />
     <Compile Include="BLL\TestService.cs" />
     <Compile Include="DAL\QuestionRepository.cs" />
