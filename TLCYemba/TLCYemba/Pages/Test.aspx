@@ -1,465 +1,436 @@
-<%@ Page Title="Test TLC Yemba" Language="C#" MasterPageFile="~/Site.master" 
-         AutoEventWireup="true" CodeBehind="Test.aspx.cs" 
-         Inherits="TLC_Yemba.Pages.Test" %>
-
-<asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">
-    Test TLC Yemba — <asp:Literal ID="litTitreTest" runat="server" />
-</asp:Content>
-
-<asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Test.aspx.cs" Inherits="TLCYemba.Test" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head runat="server">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test en cours &#8212; TLC Yemba</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
-        /* ── ZONE TEST ────────────────────────────────────── */
-        .test-wrapper {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 32px 24px;
-        }
-
-        /* ── BARRE SUPÉRIEURE ─────────────────────────────── */
-        .test-topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--fond2);
-            border: 1px solid rgba(74,124,47,0.25);
-            border-radius: 10px;
-            padding: 14px 24px;
-            margin-bottom: 20px;
-        }
-        .test-section-badge {
-            font-family: 'Space Mono', monospace;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: var(--vert2);
-            text-transform: uppercase;
-        }
-        .test-timer-display {
-            font-family: 'Space Mono', monospace;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--creme);
-            background: rgba(74,124,47,0.2);
-            border: 1px solid rgba(74,124,47,0.4);
-            border-radius: 6px;
-            padding: 6px 18px;
-            transition: color 0.3s, border-color 0.3s, background 0.3s;
-        }
-        .test-timer-display.warning {
-            color: #E8C060;
-            border-color: rgba(232,192,96,0.5);
-            background: rgba(232,192,96,0.1);
-        }
-        .test-timer-display.critical {
-            color: #E07050;
-            border-color: rgba(224,112,80,0.5);
-            background: rgba(224,112,80,0.1);
-            animation: timerPulse 1s infinite;
-        }
-        @keyframes timerPulse {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.65; }
-        }
-        .test-counter {
-            font-family: 'Space Mono', monospace;
-            font-size: 12px;
-            color: #6B7280;
-        }
-
-        /* ── BARRE DE PROGRESSION ─────────────────────────── */
-        .progress-wrap {
-            margin-bottom: 24px;
-        }
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            color: #6B7280;
-            margin-bottom: 6px;
-        }
-        .progress-bar-bg {
-            background: rgba(74,124,47,0.12);
-            border-radius: 4px;
-            height: 6px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--vert), var(--vert2));
-            border-radius: 4px;
-            transition: width 0.4s ease;
-        }
-
-        /* ── CARTE QUESTION ───────────────────────────────── */
-        .question-card {
-            background: var(--fond2);
-            border: 1px solid rgba(74,124,47,0.2);
-            border-radius: 12px;
-            padding: 28px 32px;
-            margin-bottom: 24px;
-        }
-        .question-num {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            color: var(--or);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .question-enonce {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: var(--creme);
-            line-height: 1.6;
-            margin-bottom: 28px;
-        }
-
-        /* ── OPTIONS QCM ──────────────────────────────────── */
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .option-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(74,124,47,0.15);
-            border-radius: 8px;
-            padding: 14px 18px;
-            cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .option-label:hover {
-            border-color: rgba(74,124,47,0.45);
-            background: rgba(74,124,47,0.08);
-        }
-        .option-label.selected {
-            border-color: var(--vert2);
-            background: rgba(139,195,74,0.08);
-        }
-        /* Masquer le radio natif */
-        .option-label input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .option-radio-custom {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 2px solid rgba(74,124,47,0.4);
-            flex-shrink: 0;
-            margin-top: 2px;
-            transition: border-color 0.2s, background 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .option-label.selected .option-radio-custom {
-            border-color: var(--vert2);
-            background: var(--vert);
-        }
-        .option-radio-custom::after {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--creme);
-            display: none;
-        }
-        .option-label.selected .option-radio-custom::after {
-            display: block;
-        }
-        .option-lettre {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--vert2);
-            min-width: 20px;
-            flex-shrink: 0;
-        }
-        .option-texte {
-            font-size: 15px;
-            color: var(--creme);
-            line-height: 1.5;
-        }
-
-        /* ── ALERTE NON RÉPONDU ───────────────────────────── */
-        .alerte-validation {
-            background: rgba(232,192,96,0.1);
-            border: 1px solid rgba(232,192,96,0.4);
-            color: #E8C060;
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-size: 13px;
-            margin-top: 12px;
-            display: none;
-        }
-
-        /* ── NAVIGATION ───────────────────────────────────── */
-        .test-navigation {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        .nav-dots {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            flex: 1;
-            justify-content: center;
-        }
-        .nav-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(74,124,47,0.2);
-            border: 1px solid rgba(74,124,47,0.3);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .nav-dot.answered   { background: var(--vert); border-color: var(--vert2); }
-        .nav-dot.current    { background: var(--or);   border-color: var(--or2); }
-
-        /* ── BOUTON TERMINER ──────────────────────────────── */
-        .btn-terminer {
-            background: linear-gradient(135deg, var(--or), #A8782A);
-            color: #1A0F00;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: opacity 0.2s;
-        }
-        .btn-terminer:hover { opacity: 0.9; }
-
-        /* ── MODAL CONFIRMATION ───────────────────────────── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: var(--fond2);
-            border: 1px solid rgba(201,150,58,0.4);
-            border-radius: 14px;
-            padding: 36px 40px;
-            max-width: 440px;
-            width: 90%;
-            text-align: center;
-        }
-        .modal-icon { font-size: 40px; margin-bottom: 16px; }
-        .modal-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            color: var(--or);
-            margin-bottom: 10px;
-        }
-        .modal-text { font-size: 14px; color: #9CA3AF; line-height: 1.6; margin-bottom: 24px; }
-        .modal-stats { 
-            display: flex; gap: 16px; justify-content: center; 
-            margin-bottom: 24px;
-        }
-        .modal-stat {
-            background: rgba(74,124,47,0.1);
-            border: 1px solid rgba(74,124,47,0.25);
-            border-radius: 8px;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        .modal-stat-num  { font-family: 'Space Mono', monospace; font-size: 22px; color: var(--vert2); }
-        .modal-stat-lbl  { font-size: 11px; color: #6B7280; margin-top: 2px; }
-        .modal-btns { display: flex; gap: 12px; justify-content: center; }
-
-        @media (max-width: 640px) {
-            .test-topbar { flex-wrap: wrap; gap: 10px; }
-            .question-card { padding: 20px 18px; }
-            .nav-dots { max-width: 200px; }
-        }
+        :root{--teal:#3AAFA9;--teal-dark:#2B8F8A;--teal-pale:#EAF8F7;
+            --txt-dark:#2D3748;--txt-mid:#4A5568;--txt-soft:#718096;
+            --white:#FFFFFF;--radius:18px;--danger:#E53E3E;}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{font-family:'Poppins',sans-serif;
+            background:linear-gradient(145deg,#C8EDEA 0%,#EAF8F7 40%,#DEF5F3 70%,#B8E8E4 100%);
+            min-height:100vh;color:var(--txt-dark);}
+        .page-wrapper{max-width:900px;margin:32px auto;
+            background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+            border-radius:28px;box-shadow:0 8px 48px rgba(58,175,169,.16);
+            overflow:hidden;}
+        /* TOP BAR */
+        .top-bar{display:flex;align-items:center;justify-content:space-between;
+            padding:18px 36px;background:rgba(255,255,255,.98);
+            border-bottom:1.5px solid rgba(58,175,169,.12);}
+        .top-bar-left{display:flex;align-items:center;gap:14px}
+        .top-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+        .logo-icon{width:38px;height:38px;background:var(--teal);border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;color:#fff;}
+        .logo-text{font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:var(--txt-dark)}
+        .logo-text span{color:var(--teal)}
+        .section-badge{display:inline-flex;align-items:center;gap:6px;
+            background:var(--teal-pale);border:1.5px solid rgba(58,175,169,.25);
+            color:var(--teal-dark);padding:5px 14px;border-radius:50px;
+            font-size:12px;font-weight:700;}
+        .section-badge i{font-size:11px;color:var(--teal)}
+        /* TIMER */
+        .timer-wrap{display:flex;align-items:center;gap:10px}
+        .timer-box{display:flex;align-items:center;gap:8px;
+            padding:8px 18px;border-radius:50px;
+            background:var(--teal-pale);border:1.5px solid rgba(58,175,169,.25);
+            font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;color:var(--teal-dark);}
+        .timer-box i{font-size:15px;color:var(--teal)}
+        .timer-box.danger{background:#FFF5F5;border-color:#FEB2B2;color:var(--danger);
+            animation:pulse 1s ease-in-out infinite}
+        .timer-box.danger i{color:var(--danger)}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+        /* PROGRESS */
+        .progress-section{padding:20px 36px 0}
+        .progress-header{display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:10px}
+        .progress-label{font-size:13px;color:var(--txt-soft);font-weight:500}
+        .progress-count{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--teal)}
+        .progress-bar-wrap{height:8px;background:#E2E8F0;border-radius:50px;overflow:hidden}
+        .progress-bar-fill{height:100%;background:linear-gradient(90deg,#3AAFA9,#44C4BE);
+            border-radius:50px;transition:width .4s ease;}
+        /* NAV DOTS */
+        .nav-dots{display:flex;gap:6px;padding:14px 36px;flex-wrap:wrap}
+        .dot{width:28px;height:28px;border-radius:50%;border:2px solid #CBD5E0;
+            background:white;display:flex;align-items:center;justify-content:center;
+            font-size:10px;font-weight:700;color:#A0AEC0;cursor:pointer;transition:all .2s;}
+        .dot.answered{background:var(--teal);border-color:var(--teal);color:white}
+        .dot.current{border-color:var(--teal);color:var(--teal);font-weight:900}
+        .dot.current.answered{background:var(--teal-dark);border-color:var(--teal-dark);color:white}
+        /* QUESTION AREA */
+        .question-area{padding:28px 36px}
+        .question-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+        .q-num{width:44px;height:44px;border-radius:14px;background:var(--teal);
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;color:white;flex-shrink:0}
+        .q-section-tag{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;
+            letter-spacing:.5px}
+        /* AUDIO PLAYER */
+        .audio-panel{background:var(--teal-pale);border:1.5px solid rgba(58,175,169,.25);
+            border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;
+            display:flex;align-items:center;gap:16px;}
+        .audio-panel.hidden{display:none}
+        .audio-icon{width:48px;height:48px;background:var(--teal);border-radius:14px;
+            display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .audio-icon i{font-size:22px;color:white}
+        .audio-info{display:flex;flex-direction:column;gap:4px;flex:1}
+        .audio-label{font-size:12px;font-weight:700;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.4px}
+        .audio-desc{font-size:13px;color:var(--txt-soft)}
+        audio{width:100%;height:36px;outline:none}
+        audio::-webkit-media-controls-panel{background:white}
+        .btn-replay{display:inline-flex;align-items:center;gap:6px;
+            background:var(--teal);color:white;border:none;padding:8px 16px;
+            border-radius:50px;font-size:12.5px;font-weight:600;cursor:pointer;
+            font-family:'Poppins',sans-serif;transition:background .2s;}
+        .btn-replay:hover{background:var(--teal-dark)}
+        /* QUESTION TEXT */
+        .question-text{font-size:17px;font-weight:600;color:var(--txt-dark);
+            line-height:1.65;margin-bottom:24px;}
+        /* ANSWER CHOICES */
+        .choices-list{display:flex;flex-direction:column;gap:12px}
+        .choice-item{display:flex;align-items:center;gap:14px;
+            padding:14px 20px;border-radius:14px;border:2px solid #E2E8F0;
+            background:white;cursor:pointer;transition:all .2s;}
+        .choice-item:hover{border-color:var(--teal);background:var(--teal-pale)}
+        .choice-item.selected{border-color:var(--teal);background:var(--teal-pale)}
+        .choice-item input[type="radio"]{display:none}
+        .choice-letter{width:36px;height:36px;border-radius:10px;
+            background:#F7FAFC;border:2px solid #CBD5E0;
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--txt-mid);
+            flex-shrink:0;transition:all .2s;}
+        .choice-item.selected .choice-letter{background:var(--teal);border-color:var(--teal);color:white}
+        .choice-item:hover .choice-letter{border-color:var(--teal);color:var(--teal)}
+        .choice-item.selected:hover .choice-letter{color:white}
+        .choice-text{font-size:14.5px;color:var(--txt-dark);line-height:1.5}
+        /* NAVIGATION BUTTONS */
+        .nav-buttons{display:flex;align-items:center;justify-content:space-between;
+            padding:20px 36px 28px;border-top:1.5px solid rgba(58,175,169,.10);gap:12px;}
+        .btn-nav{display:inline-flex;align-items:center;gap:8px;
+            padding:12px 26px;border-radius:50px;font-size:14px;font-weight:600;
+            cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;border:none;}
+        .btn-prev{background:#F7FAFC;color:var(--txt-mid);border:1.5px solid #E2E8F0}
+        .btn-prev:hover{background:#EDF2F7;color:var(--txt-dark)}
+        .btn-prev:disabled{opacity:.4;cursor:not-allowed}
+        .btn-next{background:var(--teal);color:white;
+            box-shadow:0 4px 14px rgba(58,175,169,.35)}
+        .btn-next:hover{background:var(--teal-dark);transform:translateY(-2px)}
+        .btn-finish{background:#48BB78;color:white;
+            box-shadow:0 4px 14px rgba(72,187,120,.35)}
+        .btn-finish:hover{background:#38A169;transform:translateY(-2px)}
+        /* MODAL CONFIRMATION */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);
+            z-index:1000;align-items:center;justify-content:center;}
+        .modal-overlay.show{display:flex}
+        .modal{background:white;border-radius:24px;padding:40px;max-width:440px;width:90%;
+            box-shadow:0 20px 60px rgba(0,0,0,.20);text-align:center;
+            animation:modalIn .3s ease both;}
+        @keyframes modalIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+        .modal-icon{width:72px;height:72px;background:#EBF8F5;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+        .modal-icon i{font-size:32px;color:var(--teal)}
+        .modal h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;
+            color:var(--txt-dark);margin-bottom:10px;}
+        .modal p{font-size:14px;color:var(--txt-soft);line-height:1.7;margin-bottom:8px}
+        .modal-stats{display:flex;justify-content:center;gap:24px;
+            margin:16px 0;padding:16px;background:var(--teal-pale);
+            border-radius:14px;border:1px solid rgba(58,175,169,.2);}
+        .modal-stat{display:flex;flex-direction:column;gap:2px;text-align:center}
+        .modal-stat-num{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--teal)}
+        .modal-stat-label{font-size:11px;color:var(--txt-soft);font-weight:500}
+        .modal-buttons{display:flex;gap:12px;justify-content:center;margin-top:24px}
+        .btn-modal-cancel{padding:11px 24px;border-radius:50px;border:2px solid #E2E8F0;
+            background:white;color:var(--txt-mid);font-size:14px;font-weight:600;
+            cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;}
+        .btn-modal-cancel:hover{background:#F7FAFC}
+        .btn-modal-confirm{display:inline-flex;align-items:center;gap:8px;
+            padding:11px 28px;border-radius:50px;background:#48BB78;
+            color:white;border:none;font-size:14px;font-weight:600;cursor:pointer;
+            font-family:'Poppins',sans-serif;transition:all .2s;
+            box-shadow:0 4px 14px rgba(72,187,120,.35);}
+        .btn-modal-confirm:hover{background:#38A169}
     </style>
-</asp:Content>
+</head>
+<body>
+<form id="form1" runat="server">
 
-<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+<div class="page-wrapper">
 
-    <div class="test-wrapper">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <a href="Default.aspx" class="top-logo">
+        <div class="logo-icon">T</div>
+        <span class="logo-text">TLC <span>Yemba</span></span>
+      </a>
+      <asp:Label ID="lblSectionBadge" runat="server" CssClass="section-badge">
+        <i class="fa-solid fa-layer-group"></i>
+        <asp:Literal ID="litSection" runat="server"/>
+      </asp:Label>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer-box" id="timerBox">
+        <i class="fa-solid fa-clock"></i>
+        <span id="timerDisplay">--:--</span>
+      </div>
+    </div>
+  </div>
 
-        <!-- ─── BARRE SUPÉRIEURE ──────────────────────────────── -->
-        <div class="test-topbar">
-            <div class="test-section-badge">
-                🌿 <asp:Literal ID="litSection" runat="server" />
-            </div>
-            <div class="test-timer-display" id="timerDisplay">--:--</div>
-            <div class="test-counter">
-                Q&nbsp;<asp:Literal ID="litIndexAffiche" runat="server" />&nbsp;/&nbsp;<asp:Literal ID="litTotal" runat="server" />
-            </div>
+  <!-- PROGRESS BAR -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">
+        <i class="fa-solid fa-chart-line" style="color:var(--teal);margin-right:5px"></i>
+        Progression
+      </span>
+      <span class="progress-count">
+        <asp:Literal ID="litQNum" runat="server"/>
+        <asp:Literal ID="litQTotal" runat="server"/>
+      </span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- NAV DOTS -->
+  <div class="nav-dots" id="navDots"></div>
+
+  <!-- QUESTION AREA -->
+  <div class="question-area">
+
+    <!-- Question header -->
+    <div class="question-header">
+      <div class="q-num">
+        <asp:Literal ID="litNumero" runat="server"/>
+      </div>
+      <div>
+        <div class="q-section-tag">
+          <i class="fa-solid fa-tag" style="margin-right:4px"></i>
+          <asp:Literal ID="litSectionTag" runat="server"/>
         </div>
-
-        <!-- ─── BARRE DE PROGRESSION ─────────────────────────── -->
-        <div class="progress-wrap">
-            <div class="progress-info">
-                <span>Progression</span>
-                <span id="progressPct">0%</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
-            </div>
-        </div>
-
-        <!-- ─── CARTE QUESTION ────────────────────────────────── -->
-        <asp:Panel ID="pnlQuestion" runat="server">
-            <div class="question-card">
-                <div class="question-num">
-                    Question <asp:Literal ID="litNumQuestion" runat="server" />
-                </div>
-                <div class="question-enonce">
-                    <asp:Literal ID="litEnonce" runat="server" />
-                </div>
-
-                <!-- Options QCM (rendu par le code-behind) -->
-                <div class="options-list" id="optionsList">
-                    <asp:PlaceHolder ID="phOptions" runat="server" />
-                </div>
-
-                <div class="alerte-validation" id="alerteValidation">
-                    ⚠️ Veuillez sélectionner une réponse avant de continuer.
-                </div>
-            </div>
-
-            <!-- ─── NAVIGATION ─────────────────────────────────── -->
-            <div class="test-navigation">
-                <asp:Button ID="btnPrecedent" runat="server" Text="← Précédent"
-                    CssClass="btn btn-outline" OnClick="btnPrecedent_Click"
-                    CausesValidation="false" />
-
-                <div class="nav-dots" id="navDots">
-                    <asp:PlaceHolder ID="phNavDots" runat="server" />
-                </div>
-
-                <asp:Button ID="btnSuivant" runat="server" Text="Suivant →"
-                    CssClass="btn btn-primary" OnClick="btnSuivant_Click"
-                    CausesValidation="false" />
-            </div>
-
-            <div style="text-align:center; margin-top:20px;">
-                <button type="button" class="btn-terminer" onclick="demanderTerminer()">
-                    ✓ Terminer le test
-                </button>
-            </div>
-        </asp:Panel>
-
-        <!-- ─── HIDDEN FIELDS ────────────────────────────────── -->
-        <asp:HiddenField ID="hdnReponseSelectionnee" runat="server" />
-        <asp:HiddenField ID="hdnDureeEcoulee"        runat="server" Value="0" />
-        <asp:HiddenField ID="hdnSecondesRestantes"   runat="server" />
-        <asp:HiddenField ID="hdnActionTerminer"      runat="server" Value="false" />
-
-        <!-- Bouton submit caché pour soumission automatique (timer) -->
-        <asp:Button ID="btnTerminerHidden" runat="server" style="display:none;"
-            Text="Terminer" OnClick="btnTerminer_Click" CausesValidation="false" />
-
-    </div><!-- /test-wrapper -->
-
-    <!-- ─── MODAL CONFIRMATION ───────────────────────────────── -->
-    <div class="modal-overlay" id="modalTerminer">
-        <div class="modal-box">
-            <div class="modal-icon">📋</div>
-            <div class="modal-title">Terminer le test ?</div>
-            <div class="modal-text">
-                Vous êtes sur le point de soumettre vos réponses.<br>
-                Cette action est <strong style="color:var(--or)">irréversible</strong>.
-            </div>
-            <div class="modal-stats">
-                <div class="modal-stat">
-                    <div class="modal-stat-num" id="modalRepondues">0</div>
-                    <div class="modal-stat-lbl">Répondues</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-num" id="modalRestantes">0</div>
-                    <div class="modal-stat-lbl">Sans réponse</div>
-                </div>
-            </div>
-            <div class="modal-btns">
-                <button type="button" class="btn btn-outline" onclick="fermerModal()">
-                    ← Continuer
-                </button>
-                <button type="button" class="btn-terminer" onclick="confirmerTerminer()">
-                    Soumettre ✓
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
 
-</asp:Content>
+    <!-- AUDIO PANEL (Listening only) -->
+    <asp:Panel ID="pnlAudio" runat="server" CssClass="audio-panel hidden">
+      <div class="audio-icon"><i class="fa-solid fa-volume-high"></i></div>
+      <div class="audio-info">
+        <div class="audio-label"><i class="fa-solid fa-headphones" style="margin-right:4px"></i>Ecoutez l'enregistrement</div>
+        <div class="audio-desc">Ecoutez attentivement avant de repondre</div>
+        <audio id="audioPlayer" controls controlsList="nodownload noplaybackrate">
+          <source id="audioSrc" src="" type="audio/mpeg"/>
+          Votre navigateur ne supporte pas l'audio HTML5.
+        </audio>
+      </div>
+      <button type="button" class="btn-replay" onclick="rejouerAudio()">
+        <i class="fa-solid fa-rotate-left"></i> Reecouter
+      </button>
+    </asp:Panel>
 
-<asp:Content ID="ScriptContent" ContentPlaceHolderID="ScriptContent" runat="server">
-    <script>
-        // ── Données injectées par le code-behind ────────────────────
-        var TLC = {
-            secondesRestantes: parseInt('<asp:Literal ID="litSecondes" runat="server" />') || 0,
-            totalQuestions:    parseInt('<asp:Literal ID="litTotalJS" runat="server" />') || 0,
-            indexCourant:      parseInt('<asp:Literal ID="litIndexJS" runat="server" />') || 0,
-            reponsesCount:     parseInt('<asp:Literal ID="litReponsesCount" runat="server" />') || 0
-        };
-    </script>
-    <script src="<%= ResolveUrl("~/Scripts/timer.js") %>"></script>
-    <script>
-        // ── Gestion du clic sur les options ─────────────────────────
-        document.querySelectorAll('.option-label').forEach(function(label) {
-            label.addEventListener('click', function() {
-                var radio = this.querySelector('input[type="radio"]');
-                radio.checked = true;
-                document.querySelectorAll('.option-label').forEach(function(l) {
-                    l.classList.remove('selected');
-                });
-                this.classList.add('selected');
-                document.getElementById('<%= hdnReponseSelectionnee.ClientID %>').value = radio.value;
-                document.getElementById('alerteValidation').style.display = 'none';
-            });
+    <!-- QUESTION TEXT -->
+    <asp:Panel ID="pnlEnonce" runat="server">
+      <p class="question-text">
+        <asp:Literal ID="litEnonce" runat="server"/>
+      </p>
+    </asp:Panel>
+
+    <!-- ANSWER CHOICES -->
+    <div class="choices-list" id="choicesList">
+      <label class="choice-item" id="choiceA">
+        <input type="radio" name="reponse" value="A" id="rdA" runat="server" onchange="onChoiceChange('A')"/>
+        <div class="choice-letter">A</div>
+        <div class="choice-text"><asp:Literal ID="litChoixA" runat="server"/></div>
+      </label>
+      <label class="choice-item" id="choiceB">
+        <input type="radio" name="reponse" value="B" id="rdB" runat="server" onchange="onChoiceChange('B')"/>
+        <div class="choice-letter">B</div>
+        <div class="choice-text"><asp:Literal ID="litChoixB" runat="server"/></div>
+      </label>
+      <label class="choice-item" id="choiceC">
+        <input type="radio" name="reponse" value="C" id="rdC" runat="server" onchange="onChoiceChange('C')"/>
+        <div class="choice-letter">C</div>
+        <div class="choice-text"><asp:Literal ID="litChoixC" runat="server"/></div>
+      </label>
+      <label class="choice-item" id="choiceD">
+        <input type="radio" name="reponse" value="D" id="rdD" runat="server" onchange="onChoiceChange('D')"/>
+        <div class="choice-letter">D</div>
+        <div class="choice-text"><asp:Literal ID="litChoixD" runat="server"/></div>
+      </label>
+    </div>
+
+  </div><!-- end question-area -->
+
+  <!-- NAVIGATION BUTTONS -->
+  <div class="nav-buttons">
+    <asp:Button ID="btnPrecedent" runat="server" Text="Precedent"
+      CssClass="btn-nav btn-prev"
+      OnClick="btnPrecedent_Click"
+      OnClientClick="sauvegarderReponse()"/>
+
+    <asp:Label ID="lblQInfo" runat="server"
+      style="font-size:13px;color:var(--txt-soft);font-weight:500;text-align:center"/>
+
+    <asp:Button ID="btnSuivant" runat="server" Text="Suivant"
+      CssClass="btn-nav btn-next"
+      OnClick="btnSuivant_Click"
+      OnClientClick="sauvegarderReponse()"/>
+
+    <asp:Button ID="btnTerminer" runat="server" Text="Terminer le test"
+      CssClass="btn-nav btn-finish"
+      OnClientClick="return ouvrirModal();"
+      OnClick="btnTerminer_Click"
+      Visible="false"/>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<!-- HIDDEN FIELD pour la reponse courante -->
+<asp:HiddenField ID="hfReponse" runat="server" />
+
+<!-- MODAL CONFIRMATION -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+    <h2>Terminer le test ?</h2>
+    <p>Vous etes sur le point de soumettre vos reponses. Cette action est irreversible.</p>
+    <div class="modal-stats">
+      <div class="modal-stat">
+        <span class="modal-stat-num" id="mAnswered">0</span>
+        <span class="modal-stat-label">Repondu</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat-num" id="mSkipped" style="color:#ED8936">0</span>
+        <span class="modal-stat-label">Non repondu</span>
+      </div>
+      <div class="modal-stat">
+        <span class="modal-stat-num">
+          <asp:Literal ID="litTotalModal" runat="server"/>
+        </span>
+        <span class="modal-stat-label">Total</span>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-modal-cancel" onclick="fermerModal()">
+        <i class="fa-solid fa-arrow-left"></i> Continuer
+      </button>
+      <button type="button" class="btn-modal-confirm" onclick="confirmerTerminer()">
+        <i class="fa-solid fa-flag-checkered"></i> Soumettre
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden submit button for modal confirm -->
+<asp:Button ID="btnSubmitFinal" runat="server" Text="Submit"
+  style="display:none" OnClick="btnTerminer_Click"/>
+
+</form>
+
+<script src="timer.js"></script>
+<script>
+// ── Donnees injectees par le serveur ──
+var totalQuestions = parseInt('<%= NbQuestions %>') || 0;
+var currentIndex   = parseInt('<%= IndexCourant %>') || 0;
+var answered       = JSON.parse('<%= AnsweredJSON ?? "[]" %>');   // ex: [0,2,4]
+var dureeMin       = parseInt('<%= DureeMinutes %>') || 30;
+
+// ── Progress bar ──
+function updateProgress(){
+    var pct = totalQuestions > 0 ? ((currentIndex+1)/totalQuestions*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ── Nav dots ──
+function buildDots(){
+    var wrap = document.getElementById('navDots');
+    wrap.innerHTML = '';
+    for(var i=0;i<Math.min(totalQuestions,50);i++){
+        var d = document.createElement('div');
+        d.className = 'dot';
+        d.textContent = i+1;
+        if(answered.indexOf(i) !== -1) d.classList.add('answered');
+        if(i === currentIndex) d.classList.add('current');
+        wrap.appendChild(d);
+    }
+}
+
+// ── Highlight selected choice ──
+function updateChoiceHighlight(){
+    ['A','B','C','D'].forEach(function(l){
+        var rd = document.getElementById('rd'+l);
+        var ci = document.getElementById('choice'+l);
+        if(rd && ci){
+            if(rd.checked){ ci.classList.add('selected'); }
+            else { ci.classList.remove('selected'); }
+        }
+    });
+}
+function onChoiceChange(letter){
+    document.getElementById('hfReponse').value = letter;
+    updateChoiceHighlight();
+}
+
+// ── Audio ──
+function rejouerAudio(){
+    var p = document.getElementById('audioPlayer');
+    if(p){ p.currentTime=0; p.play().catch(function(){}); }
+}
+
+// ── Modal ──
+function ouvrirModal(){
+    var ans = 0;
+    ['A','B','C','D'].forEach(function(l){
+        var r = document.getElementById('rd'+l); if(r && r.checked) ans++;
+    });
+    // Compte les reponses totales (depuis answered array + reponse courante)
+    var tot = answered.length;
+    var skipped = totalQuestions - tot;
+    document.getElementById('mAnswered').textContent = tot;
+    document.getElementById('mSkipped').textContent = Math.max(0,skipped);
+    document.getElementById('modalOverlay').classList.add('show');
+    return false;
+}
+function fermerModal(){
+    document.getElementById('modalOverlay').classList.remove('show');
+}
+function confirmerTerminer(){
+    document.getElementById('<%= btnSubmitFinal.ClientID %>').click();
+}
+
+// ── Init ──
+window.addEventListener('DOMContentLoaded', function(){
+    updateProgress();
+    buildDots();
+    updateChoiceHighlight();
+    // Demarrer timer (timer.js)
+    if(typeof startTimer === 'function'){
+        startTimer(dureeMin * 60, 'timerDisplay', 'timerBox', function(){
+            document.getElementById('<%= btnSubmitFinal.ClientID %>').click();
         });
-
-        // ── Barre de progression ─────────────────────────────────────
-        (function() {
-            var idx   = TLC.indexCourant;
-            var total = TLC.totalQuestions;
-            var pct   = total > 0 ? Math.round(((idx) / total) * 100) : 0;
-            document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('progressPct').textContent  = pct + '%';
-        })();
-
-        // ── Modal Terminer ───────────────────────────────────────────
-        function demanderTerminer() {
-            var repondues = TLC.reponsesCount;
-            var restantes = TLC.totalQuestions - repondues;
-            document.getElementById('modalRepondues').textContent = repondues;
-            document.getElementById('modalRestantes').textContent = restantes;
-            document.getElementById('modalTerminer').classList.add('active');
-        }
-        function fermerModal() {
-            document.getElementById('modalTerminer').classList.remove('active');
-        }
-        function confirmerTerminer() {
-            document.getElementById('<%= hdnActionTerminer.ClientID %>').value = 'true';
-            document.getElementById('<%= btnTerminerHidden.ClientID %>').click();
-        }
-
-        // ── Soumission auto au clic Suivant/Précédent ────────────────
-        function validerEtSoumettre(btnId) {
-            var hdn = document.getElementById('<%= hdnReponseSelectionnee.ClientID %>');
-            // Pas d'obligation — on autorise de passer sans répondre
-            document.getElementById(btnId).click();
-        }
-    </script>
-</asp:Content>
+    }
+    // Auto-play audio si present
+    var audioPanel = document.querySelector('.audio-panel');
+    if(audioPanel && !audioPanel.classList.contains('hidden')){
+        var p = document.getElementById('audioPlayer');
+        if(p) p.play().catch(function(){});
+    }
+});
+function sauvegarderReponse(){
+    var sel = '';
+    ['A','B','C','D'].forEach(function(l){
+        var r=document.getElementById('rd'+l); if(r&&r.checked) sel=l;
+    });
+    document.getElementById('<%= hfReponse.ClientID %>').value = sel;
+    return true;
+}
+</script>
+</body>
+</html>

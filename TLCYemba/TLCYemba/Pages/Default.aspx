@@ -9,207 +9,128 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
-            --teal:      #3AAFA9;
-            --teal-dark: #2B8F8A;
-            --teal-pale: #EAF8F7;
-            --teal-mid:  #DEF2F1;
-            --txt-dark:  #2D3748;
-            --txt-mid:   #4A5568;
-            --txt-soft:  #718096;
-            --white:     #FFFFFF;
-            --radius:    18px;
+            --teal:#3AAFA9; --teal-dark:#2B8F8A;
+            --teal-pale:#EAF8F7; --teal-mid:#DEF2F1;
+            --txt-dark:#2D3748; --txt-mid:#4A5568;
+            --txt-soft:#718096; --white:#FFFFFF; --radius:18px;
         }
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
-        body{
-            font-family:'Poppins',sans-serif;
+        body{font-family:'Poppins',sans-serif;
             background:linear-gradient(145deg,#C8EDEA 0%,#EAF8F7 40%,#DEF5F3 70%,#B8E8E4 100%);
-            min-height:100vh;color:var(--txt-dark);
-        }
+            min-height:100vh;color:var(--txt-dark);}
         .bg-wave{position:fixed;inset:0;z-index:0;pointer-events:none}
         .bg-wave svg{width:100%;height:100%}
-        .page-wrapper{
-            position:relative;z-index:1;
-            max-width:1280px;margin:32px auto;
-            background:rgba(255,255,255,.84);
-            backdrop-filter:blur(20px);
-            border-radius:32px;
-            box-shadow:0 8px 64px rgba(58,175,169,.18);
-            overflow:hidden;
-        }
+        .page-wrapper{position:relative;z-index:1;max-width:1280px;margin:32px auto;
+            background:rgba(255,255,255,.85);backdrop-filter:blur(20px);
+            border-radius:32px;box-shadow:0 8px 64px rgba(58,175,169,.18);overflow:hidden;}
         /* NAVBAR */
-        nav{
-            display:flex;align-items:center;justify-content:space-between;
-            padding:22px 52px;
-            background:rgba(255,255,255,.97);
-            border-bottom:1.5px solid rgba(58,175,169,.10);
-        }
+        nav{display:flex;align-items:center;justify-content:space-between;
+            padding:22px 52px;background:rgba(255,255,255,.97);
+            border-bottom:1.5px solid rgba(58,175,169,.10);}
         .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
-        .logo-icon{
-            width:44px;height:44px;background:var(--teal);border-radius:50%;
+        .logo-icon{width:44px;height:44px;background:var(--teal);border-radius:50%;
             display:flex;align-items:center;justify-content:center;
             font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;color:#fff;
-            box-shadow:0 4px 14px rgba(58,175,169,.4);
-        }
+            box-shadow:0 4px 14px rgba(58,175,169,.4);}
         .logo-text{font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;color:var(--txt-dark)}
         .logo-text span{color:var(--teal)}
         .nav-links{display:flex;gap:4px;list-style:none}
-        .nav-links a{
-            display:flex;align-items:center;gap:7px;
-            text-decoration:none;color:var(--txt-mid);
-            font-size:14px;font-weight:500;
-            padding:8px 16px;border-radius:50px;transition:all .2s;
-        }
+        .nav-links a{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--txt-mid);
+            font-size:14px;font-weight:500;padding:8px 16px;border-radius:50px;transition:all .2s;}
         .nav-links a i{font-size:13px;color:var(--txt-soft);transition:color .2s}
         .nav-links a:hover{color:var(--teal);background:var(--teal-pale)}
         .nav-links a:hover i{color:var(--teal)}
-        .btn-signup{
-            display:inline-flex;align-items:center;gap:8px;
-            background:var(--teal);color:#fff;border:none;
-            padding:11px 26px;border-radius:50px;
-            font-size:14.5px;font-weight:600;cursor:pointer;
-            font-family:'Poppins',sans-serif;
+        .btn-signup{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;
+            border:none;padding:11px 26px;border-radius:50px;font-size:14.5px;font-weight:600;
+            cursor:pointer;font-family:'Poppins',sans-serif;
             transition:background .2s,transform .15s,box-shadow .2s;
-            box-shadow:0 4px 16px rgba(58,175,169,.38);text-decoration:none;
-        }
+            box-shadow:0 4px 16px rgba(58,175,169,.38);text-decoration:none;}
         .btn-signup:hover{background:var(--teal-dark);transform:translateY(-2px)}
         /* HERO */
-        .hero{
-            display:grid;grid-template-columns:1fr 1fr;
-            align-items:center;padding:60px 52px 44px;gap:16px;
-        }
+        .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;
+            padding:60px 52px 44px;gap:16px;}
         .hero-left{display:flex;flex-direction:column;gap:24px}
-        .hero-badge{
-            display:inline-flex;align-items:center;gap:8px;
-            background:var(--teal-pale);border:1.5px solid rgba(58,175,169,.25);
-            color:var(--teal-dark);padding:7px 18px;
-            border-radius:50px;font-size:12.5px;font-weight:600;width:fit-content;
-            animation:fadeUp .5s ease both;
-        }
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--teal-pale);
+            border:1.5px solid rgba(58,175,169,.25);color:var(--teal-dark);
+            padding:7px 18px;border-radius:50px;font-size:12.5px;font-weight:600;
+            width:fit-content;animation:fadeUp .5s ease both;}
         .hero-badge i{font-size:11px;color:var(--teal)}
-        .hero-title{
-            font-family:'Nunito',sans-serif;
-            font-size:clamp(2rem,3.4vw,2.85rem);
-            font-weight:900;line-height:1.17;color:var(--txt-dark);
-            animation:fadeUp .5s .1s ease both;
-        }
+        .hero-title{font-family:'Nunito',sans-serif;
+            font-size:clamp(2rem,3.4vw,2.85rem);font-weight:900;
+            line-height:1.17;color:var(--txt-dark);animation:fadeUp .5s .1s ease both;}
         .hero-title span{color:var(--teal)}
-        .hero-desc{
-            font-size:14.5px;color:var(--txt-soft);
-            line-height:1.78;max-width:420px;
-            animation:fadeUp .5s .2s ease both;
-        }
+        .hero-desc{font-size:14.5px;color:var(--txt-soft);line-height:1.78;
+            max-width:420px;animation:fadeUp .5s .2s ease both;}
         .hero-buttons{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .5s .3s ease both}
-        .btn-primary{
-            display:inline-flex;align-items:center;gap:9px;
-            background:var(--teal);color:#fff;border:none;
-            padding:15px 34px;border-radius:50px;
-            font-size:15px;font-weight:700;cursor:pointer;
-            font-family:'Poppins',sans-serif;
+        .btn-primary{display:inline-flex;align-items:center;gap:9px;background:var(--teal);
+            color:#fff;border:none;padding:15px 34px;border-radius:50px;font-size:15px;
+            font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;
             transition:background .2s,transform .15s,box-shadow .2s;
-            box-shadow:0 6px 22px rgba(58,175,169,.38);text-decoration:none;
-        }
+            box-shadow:0 6px 22px rgba(58,175,169,.38);text-decoration:none;}
         .btn-primary:hover{background:var(--teal-dark);transform:translateY(-3px)}
-        .btn-secondary{
-            display:inline-flex;align-items:center;gap:9px;
-            background:transparent;color:var(--teal);border:2px solid var(--teal);
-            padding:13px 28px;border-radius:50px;
-            font-size:15px;font-weight:600;cursor:pointer;
-            font-family:'Poppins',sans-serif;transition:all .2s;text-decoration:none;
-        }
+        .btn-secondary{display:inline-flex;align-items:center;gap:9px;background:transparent;
+            color:var(--teal);border:2px solid var(--teal);padding:13px 28px;border-radius:50px;
+            font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;
+            transition:all .2s;text-decoration:none;}
         .btn-secondary:hover{background:var(--teal);color:#fff;transform:translateY(-3px)}
         .hero-stats{display:flex;gap:32px;animation:fadeUp .5s .4s ease both}
         .stat-item{display:flex;flex-direction:column;gap:2px}
         .stat-num{font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;color:var(--teal)}
         .stat-label{font-size:11.5px;color:var(--txt-soft);font-weight:500}
         /* HERO RIGHT */
-        .hero-right{
-            position:relative;display:flex;
-            align-items:flex-end;justify-content:center;
-            min-height:380px;animation:fadeUp .5s .15s ease both;
-        }
-        .hero-right svg.illo{
-            width:100%;max-width:570px;height:auto;
-            filter:drop-shadow(0 12px 32px rgba(58,175,169,.10));
-        }
-        /* SVG float animations - DIFFERENT names to avoid FA conflict */
-        .svgfa{animation:svgFloatA 3.8s ease-in-out infinite}
-        .svgfb{animation:svgFloatB 4.5s .7s ease-in-out infinite}
-        .svgfc{animation:svgFloatC 3.2s 1.1s ease-in-out infinite}
-        @keyframes svgFloatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        @keyframes svgFloatB{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-        @keyframes svgFloatC{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
-        /* SECTION PILLS */
-        .sections-strip{
-            display:flex;justify-content:center;
-            gap:10px;padding:0 52px 42px;flex-wrap:wrap;
-            animation:fadeUp .5s .5s ease both;
-        }
-        .section-pill{
-            display:flex;align-items:center;gap:9px;
-            padding:10px 22px;border-radius:50px;
-            border:1.5px solid rgba(58,175,169,.25);
-            background:var(--teal-pale);
-            font-size:13.5px;font-weight:600;color:var(--teal-dark);
-            cursor:pointer;transition:all .2s;text-decoration:none;
-        }
+        .hero-right{position:relative;display:flex;align-items:flex-end;justify-content:center;
+            min-height:390px;animation:fadeUp .5s .15s ease both;}
+        .hero-right svg.illo{width:100%;max-width:580px;height:auto;
+            filter:drop-shadow(0 8px 24px rgba(58,175,169,.08));}
+        /* SVG float anims - prefixed to avoid FA conflict */
+        .ia{animation:ifA 3.8s ease-in-out infinite}
+        .ib{animation:ifB 4.5s .7s ease-in-out infinite}
+        .ic{animation:ifC 3.2s 1.1s ease-in-out infinite}
+        @keyframes ifA{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        @keyframes ifB{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        @keyframes ifC{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+        /* SECTIONS PILLS */
+        .sections-strip{display:flex;justify-content:center;gap:10px;
+            padding:0 52px 42px;flex-wrap:wrap;animation:fadeUp .5s .5s ease both;}
+        .section-pill{display:flex;align-items:center;gap:9px;padding:10px 22px;
+            border-radius:50px;border:1.5px solid rgba(58,175,169,.25);background:var(--teal-pale);
+            font-size:13.5px;font-weight:600;color:var(--teal-dark);cursor:pointer;
+            transition:all .2s;text-decoration:none;}
         .section-pill i{font-size:14px;color:var(--teal);transition:color .2s}
-        .section-pill:hover{background:var(--teal);color:#fff;border-color:var(--teal);transform:translateY(-2px);box-shadow:0 4px 16px rgba(58,175,169,.3)}
+        .section-pill:hover{background:var(--teal);color:#fff;border-color:var(--teal);
+            transform:translateY(-2px);box-shadow:0 4px 16px rgba(58,175,169,.3)}
         .section-pill:hover i{color:#fff}
         /* CARDS */
-        .cards-section{
-            display:grid;grid-template-columns:repeat(3,1fr);
-            gap:20px;padding:0 52px 52px;
-        }
-        .card{
-            background:var(--white);border-radius:var(--radius);
-            padding:28px 24px;
-            box-shadow:0 2px 20px rgba(0,0,0,.06);
-            display:flex;flex-direction:row;align-items:flex-start;gap:18px;
-            transition:transform .22s,box-shadow .22s;
-            animation:fadeUp .5s .6s ease both;
-        }
+        .cards-section{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:0 52px 52px;}
+        .card{background:var(--white);border-radius:var(--radius);padding:28px 24px;
+            box-shadow:0 2px 20px rgba(0,0,0,.06);display:flex;flex-direction:row;
+            align-items:flex-start;gap:18px;transition:transform .22s,box-shadow .22s;
+            animation:fadeUp .5s .6s ease both;}
         .card:hover{transform:translateY(-7px);box-shadow:0 14px 40px rgba(58,175,169,.17)}
-        .card-icon-wrap{
-            flex-shrink:0;width:58px;height:58px;
-            background:var(--teal);border-radius:16px;
-            display:flex;align-items:center;justify-content:center;
-            box-shadow:0 4px 16px rgba(58,175,169,.32);
-            transition:transform .2s;
-        }
+        .card-icon-wrap{flex-shrink:0;width:58px;height:58px;background:var(--teal);
+            border-radius:16px;display:flex;align-items:center;justify-content:center;
+            box-shadow:0 4px 16px rgba(58,175,169,.32);transition:transform .2s;}
         .card:hover .card-icon-wrap{transform:scale(1.1) rotate(-5deg)}
         .card-icon-wrap i{font-size:24px;color:#fff}
         .card-body{display:flex;flex-direction:column;gap:6px}
         .card-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:var(--txt-dark)}
         .card-desc{font-size:12.5px;color:var(--txt-soft);line-height:1.65}
-        .card-link{
-            font-size:12px;font-weight:600;color:var(--teal);
-            text-decoration:none;margin-top:4px;
-            display:inline-flex;align-items:center;gap:5px;transition:gap .2s;
-        }
+        .card-link{font-size:12px;font-weight:600;color:var(--teal);text-decoration:none;
+            margin-top:4px;display:inline-flex;align-items:center;gap:5px;transition:gap .2s;}
         .card-link:hover{gap:9px}
         /* FOOTER */
-        footer{
-            background:rgba(255,255,255,.7);
-            border-top:1.5px solid rgba(58,175,169,.12);
-            padding:22px 52px;
-            display:flex;align-items:center;justify-content:space-between;
-            font-size:12.5px;color:var(--txt-soft);
-        }
+        footer{background:rgba(255,255,255,.7);border-top:1.5px solid rgba(58,175,169,.12);
+            padding:22px 52px;display:flex;align-items:center;justify-content:space-between;
+            font-size:12.5px;color:var(--txt-soft);}
         .footer-brand{font-family:'Nunito',sans-serif;font-weight:800;color:var(--teal);font-size:14px}
         .footer-links{display:flex;gap:20px}
-        .footer-links a{
-            display:flex;align-items:center;gap:6px;
-            color:var(--txt-soft);text-decoration:none;font-size:12px;transition:color .2s;
-        }
+        .footer-links a{display:flex;align-items:center;gap:6px;color:var(--txt-soft);
+            text-decoration:none;font-size:12px;transition:color .2s;}
         .footer-links a:hover{color:var(--teal)}
         .cam-colors{display:flex;gap:5px;align-items:center}
         .cam-dot{width:11px;height:11px;border-radius:50%}
-        /* PAGE ANIMATIONS */
-        @keyframes fadeUp{
-            from{opacity:0;transform:translateY(24px)}
-            to{opacity:1;transform:translateY(0)}
-        }
+        @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         @media(max-width:920px){
             .page-wrapper{margin:12px;border-radius:22px}
             nav{padding:18px 24px}
@@ -230,11 +151,10 @@
         <path d="M0 640 Q380 510 740 640 T1440 550 V900 H0Z" fill="rgba(58,175,169,.07)"/>
     </svg>
 </div>
-
 <form id="form1" runat="server">
 <div class="page-wrapper">
 
-<!-- ============ NAVBAR ============ -->
+<!-- NAVBAR -->
 <nav>
   <a href="Default.aspx" class="nav-logo">
     <div class="logo-icon">T</div>
@@ -251,7 +171,7 @@
   </a>
 </nav>
 
-<!-- ============ HERO ============ -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge">
@@ -276,333 +196,277 @@
       </a>
     </div>
     <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-num">4</span>
-        <span class="stat-label">Sections TLC</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">5</span>
-        <span class="stat-label">Niveaux</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <span class="stat-label">Gratuit</span>
-      </div>
+      <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Sections TLC</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-label">Niveaux</span></div>
+      <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Gratuit</span></div>
     </div>
   </div>
 
-  <!-- ============ SVG ILLUSTRATION ============ -->
+  <!-- SVG ILLUSTRATION -->
   <div class="hero-right">
-<svg class="illo" viewBox="0 0 570 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="illo" viewBox="0 0 580 480" fill="none" xmlns="http://www.w3.org/2000/svg">
 <defs>
-  <filter id="s1" x="-30%" y="-30%" width="160%" height="160%">
-    <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.10)"/>
-  </filter>
-  <filter id="s2" x="-40%" y="-40%" width="180%" height="180%">
-    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.08)"/>
-  </filter>
-  <clipPath id="flagClip"><circle cx="152" cy="106" r="36"/></clipPath>
-  <linearGradient id="skinGrad" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stop-color="#FCCFA8"/>
-    <stop offset="100%" stop-color="#F0B48A"/>
-  </linearGradient>
-  <linearGradient id="blazerShade" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stop-color="#2B9990"/>
-    <stop offset="40%" stop-color="#3AAFA9"/>
-    <stop offset="100%" stop-color="#2E9D97"/>
-  </linearGradient>
-  <linearGradient id="hairShade" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0%" stop-color="#1E2F1C"/>
-    <stop offset="100%" stop-color="#131E11"/>
+  <filter id="sd1"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.10)"/></filter>
+  <filter id="sd2"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.07)"/></filter>
+  <clipPath id="flg"><circle cx="155" cy="110" r="36"/></clipPath>
+  <linearGradient id="blobG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#D8F0EE"/>
+    <stop offset="100%" stop-color="#E8F8F6"/>
   </linearGradient>
 </defs>
 
-<!-- ===== BACKGROUND BLOB ===== -->
-<path d="M158 148 C148 72 228 44 338 52 C448 60 508 102 520 192 C532 282 496 376 410 410 C324 444 214 430 170 374 C126 318 168 224 158 148Z" fill="#D8F0EE" opacity="0.92"/>
-<path d="M172 164 C163 97 236 72 336 79 C436 86 492 124 502 202 C512 280 478 362 400 394 C322 426 224 412 182 362 C140 312 181 231 172 164Z" fill="#E6F8F6" opacity="0.65"/>
+<!-- BLOB BACKGROUND -->
+<ellipse cx="330" cy="268" rx="218" ry="196" fill="url(#blobG)" opacity="0.95"/>
 
-<!-- ===== DESK ===== -->
-<rect x="96" y="393" width="414" height="16" rx="7" fill="#B0D8D5"/>
-<rect x="96" y="393" width="414" height="6" rx="3" fill="#C4E6E3"/>
+<!-- DESK -->
+<rect x="100" y="398" width="430" height="15" rx="7" fill="#B0D5D2"/>
+<rect x="100" y="398" width="430" height="6" rx="3" fill="#C2E2DF"/>
 
-<!-- ===== LAPTOP ===== -->
-<!-- Laptop base/keyboard -->
-<rect x="188" y="382" width="210" height="13" rx="5" fill="#B8DCDA"/>
-<rect x="196" y="382" width="194" height="5" rx="2" fill="#CAE8E6"/>
-<!-- Laptop hinge line -->
-<rect x="190" y="381" width="206" height="3" rx="1.5" fill="#A4CCCA"/>
-<!-- Laptop screen outer -->
-<rect x="192" y="254" width="202" height="130" rx="10" fill="#CCE8E4" stroke="#A8CCCA" stroke-width="2"/>
-<!-- Laptop screen inner display -->
-<rect x="202" y="263" width="182" height="112" rx="6" fill="#E2F4F2"/>
-<!-- Screen content lines -->
-<rect x="218" y="278" width="88" height="8" rx="4" fill="rgba(58,175,169,.50)"/>
-<rect x="218" y="293" width="144" height="5" rx="2.5" fill="rgba(58,175,169,.30)"/>
-<rect x="218" y="305" width="122" height="5" rx="2.5" fill="rgba(58,175,169,.22)"/>
-<rect x="218" y="317" width="100" height="5" rx="2.5" fill="rgba(58,175,169,.16)"/>
-<rect x="218" y="329" width="78" height="5" rx="2.5" fill="rgba(58,175,169,.12)"/>
-<!-- Screen label -->
-<text x="293" y="356" text-anchor="middle" font-family="Nunito,Arial" font-size="10.5" font-weight="900" fill="#2B9990" opacity="0.85">TLC Yemba</text>
-<!-- Laptop camera dot -->
-<circle cx="293" cy="267" r="2" fill="#9ABFBC"/>
+<!-- LAPTOP BASE -->
+<rect x="192" y="385" width="216" height="15" rx="6" fill="#B4D8D4"/>
+<rect x="200" y="385" width="200" height="5" rx="2.5" fill="#C8E8E5"/>
 
-<!-- ===== COFFEE CUP ===== -->
-<g class="svgfc">
-  <path d="M432 358 L434 386 L456 386 L458 358 Z" fill="#9CC8C4"/>
-  <rect x="430" y="352" width="30" height="9" rx="4.5" fill="#B0D8D4"/>
-  <path d="M460 362 C470 362 474 367 474 372 C474 377 470 380 460 380" stroke="#9CC8C4" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <ellipse cx="444" cy="387" rx="12" ry="3" fill="rgba(0,0,0,.07)"/>
-  <!-- Steam -->
-  <path d="M439 350 C441 344 438 338 440 332" stroke="#C4E6E4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-  <path d="M447 349 C449 342 446 336 448 330" stroke="#C4E6E4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+<!-- LAPTOP SCREEN -->
+<rect x="196" y="256" width="208" height="132" rx="12" fill="#C8E6E2" stroke="#A4CECA" stroke-width="2"/>
+<rect x="206" y="266" width="188" height="112" rx="7" fill="#E0F2F0"/>
+<!-- Screen glow lines -->
+<rect x="222" y="282" width="86" height="8" rx="4" fill="rgba(58,175,169,.55)"/>
+<rect x="222" y="296" width="148" height="5" rx="2.5" fill="rgba(58,175,169,.32)"/>
+<rect x="222" y="308" width="124" height="5" rx="2.5" fill="rgba(58,175,169,.24)"/>
+<rect x="222" y="320" width="96" height="5" rx="2.5" fill="rgba(58,175,169,.16)"/>
+<text x="300" y="356" text-anchor="middle" font-family="Nunito,sans-serif" font-size="11" font-weight="900" fill="#2B9990">TLC Yemba</text>
+<circle cx="300" cy="270" r="2.5" fill="#8ABEBA"/>
+
+<!-- COFFEE CUP -->
+<g class="ic">
+  <rect x="436" y="360" width="30" height="28" rx="4" fill="#9AC4C0"/>
+  <rect x="434" y="354" width="34" height="9" rx="4.5" fill="#B0D6D2"/>
+  <path d="M466 365 C476 365 480 370 480 374 C480 378 476 381 466 381" stroke="#9AC4C0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M443 352 C445 346 443 340 444 334" stroke="#C8E6E4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M451 351 C453 345 451 339 452 333" stroke="#C8E6E4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
 </g>
 
-<!-- ===== PLANT ===== -->
-<g>
-  <!-- Pot -->
-  <path d="M515 396 L509 368 L529 368 Z" fill="#8FBAB6"/>
-  <rect x="505" y="392" width="34" height="9" rx="4" fill="#7EAAA6"/>
-  <rect x="505" y="392" width="34" height="4" rx="2" fill="#8FBAB6"/>
-  <!-- Soil -->
-  <ellipse cx="517" cy="368" rx="10" ry="3" fill="#7EAAA6"/>
-  <!-- Stems -->
-  <path d="M517 368 C514 352 506 332 500 308" stroke="#5BA898" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M517 368 C517 348 516 322 514 296" stroke="#5BA898" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M517 368 C521 350 528 328 534 302" stroke="#5BA898" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <!-- Leaves -->
-  <ellipse cx="498" cy="305" rx="18" ry="10" fill="#47A090" transform="rotate(-40 498 305)"/>
-  <ellipse cx="498" cy="305" rx="10" ry="5" fill="#5AB8A8" transform="rotate(-40 498 305)" opacity="0.5"/>
-  <ellipse cx="514" cy="292" rx="18" ry="10" fill="#52B09F"/>
-  <ellipse cx="514" cy="292" rx="10" ry="5" fill="#66C4B4" opacity="0.5"/>
-  <ellipse cx="535" cy="299" rx="18" ry="10" fill="#47A090" transform="rotate(35 535 299)"/>
-  <ellipse cx="535" cy="299" rx="10" ry="5" fill="#5AB8A8" transform="rotate(35 535 299)" opacity="0.5"/>
-</g>
+<!-- PLANT -->
+<path d="M524 404 L518 374 L538 374 Z" fill="#8ABAB6"/>
+<rect x="514" y="400" width="36" height="10" rx="4" fill="#78AAA6"/>
+<path d="M527 374 C524 358 516 336 509 310" stroke="#58A896" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M527 374 C527 352 525 325 523 296" stroke="#58A896" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M527 374 C532 356 540 332 547 306" stroke="#58A896" stroke-width="4" fill="none" stroke-linecap="round"/>
+<ellipse cx="507" cy="307" rx="20" ry="11" fill="#46A090" transform="rotate(-40 507 307)"/>
+<ellipse cx="523" cy="292" rx="20" ry="11" fill="#52B0A0"/>
+<ellipse cx="548" cy="303" rx="20" ry="11" fill="#46A090" transform="rotate(36 548 303)"/>
+<ellipse cx="507" cy="307" rx="11" ry="6" fill="#60C0B0" transform="rotate(-40 507 307)" opacity="0.4"/>
+<ellipse cx="523" cy="292" rx="11" ry="6" fill="#64C8B8" opacity="0.4"/>
+<ellipse cx="548" cy="303" rx="11" ry="6" fill="#60C0B0" transform="rotate(36 548 303)" opacity="0.4"/>
 
-<!-- ===== LEFT ARM (before body so body covers shoulder) ===== -->
-<path d="M248 304 C232 328 218 356 212 384" stroke="#3AAFA9" stroke-width="30" fill="none" stroke-linecap="round"/>
-<path d="M246 308 C230 332 217 358 214 382" stroke="#44BCBC" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.22"/>
+<!-- =====================================================
+     FLAT ANIME ILLUSTRATION - LADY
+     Style: clean flat design, anime-inspired, like the reference
+     ===================================================== -->
+
+<!-- ARMS (behind torso) -->
+<!-- Left arm -->
+<path d="M246 312 C228 342 218 370 216 393" stroke="#3AAFA9" stroke-width="32" fill="none" stroke-linecap="round"/>
 <!-- Left hand -->
-<ellipse cx="213" cy="384" rx="15" ry="10" fill="#FCCFA8"/>
-<!-- Finger hints -->
-<path d="M204 380 C202 376 206 372 210 376" stroke="#F0B48A" stroke-width="2" fill="none" stroke-linecap="round"/>
-<path d="M220 379 C222 375 218 371 214 375" stroke="#F0B48A" stroke-width="2" fill="none" stroke-linecap="round"/>
+<ellipse cx="217" cy="393" rx="16" ry="10" fill="#F5C4A2"/>
 
-<!-- ===== RIGHT ARM ===== -->
-<path d="M348 304 C362 328 374 356 378 384" stroke="#3AAFA9" stroke-width="30" fill="none" stroke-linecap="round"/>
-<path d="M350 308 C364 332 375 358 376 382" stroke="#44BCBC" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.22"/>
+<!-- Right arm -->
+<path d="M358 312 C374 342 382 370 384 393" stroke="#3AAFA9" stroke-width="32" fill="none" stroke-linecap="round"/>
 <!-- Right hand -->
-<ellipse cx="377" cy="384" rx="15" ry="10" fill="#FCCFA8"/>
-<path d="M368 380 C366 376 370 372 374 376" stroke="#F0B48A" stroke-width="2" fill="none" stroke-linecap="round"/>
-<path d="M384 379 C386 375 382 371 378 375" stroke="#F0B48A" stroke-width="2" fill="none" stroke-linecap="round"/>
+<ellipse cx="383" cy="393" rx="16" ry="10" fill="#F5C4A2"/>
 
-<!-- ===== TORSO / BLAZER ===== -->
-<path d="M196 398 C196 300 222 278 232 270 C252 256 272 250 298 248 C324 250 344 256 364 270 C374 278 400 300 400 398 Z" fill="url(#blazerShade)"/>
-<!-- Blazer side shadow left -->
-<path d="M196 370 C196 310 216 282 234 272 L220 280 C210 296 202 330 202 398 Z" fill="rgba(0,0,0,.07)"/>
-<!-- Blazer side shadow right -->
-<path d="M400 370 C400 310 380 282 362 272 L376 280 C386 296 394 330 394 398 Z" fill="rgba(0,0,0,.07)"/>
+<!-- TORSO - flat teal blazer -->
+<path d="M202 410 C202 306 226 280 240 270 C260 256 280 248 302 246 C324 248 344 256 364 270 C378 280 402 306 402 410 Z" fill="#3AAFA9"/>
+<!-- Blazer subtle darker edges -->
+<path d="M202 380 L208 380 C212 320 228 284 242 272 L226 282 C214 300 206 340 202 380Z" fill="rgba(0,0,0,.06)"/>
+<path d="M402 380 L396 380 C392 320 372 284 362 272 L378 282 C390 300 398 340 402 380Z" fill="rgba(0,0,0,.06)"/>
 
-<!-- White shirt / inner collar -->
-<path d="M260 266 L298 310 L336 266 L330 326 C314 352 282 352 266 326 Z" fill="white"/>
-<path d="M272 278 L298 310 L324 278 L320 324 C310 344 286 344 276 324 Z" fill="#F0FAFA" opacity="0.6"/>
+<!-- White shirt / collar V -->
+<path d="M264 268 L302 316 L340 268 L334 332 C318 356 286 356 270 332 Z" fill="white"/>
+<!-- Collar shading -->
+<path d="M278 280 L302 316 L326 280 L322 330 C312 348 292 348 282 330 Z" fill="#EEF8F7" opacity="0.7"/>
 
-<!-- Blazer left lapel -->
-<path d="M228 274 C240 260 256 258 262 266 L254 314 C238 302 222 308 218 312 Z" fill="#2B9490"/>
-<path d="M230 280 C240 270 254 266 258 272" stroke="rgba(255,255,255,.18)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-<!-- Blazer right lapel -->
-<path d="M368 274 C356 260 340 258 334 266 L342 314 C358 302 374 308 378 312 Z" fill="#2B9490"/>
-<path d="M366 280 C356 270 342 266 338 272" stroke="rgba(255,255,255,.18)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<!-- Blazer lapel left -->
+<path d="M226 276 C242 262 260 260 266 268 L258 320 C240 308 222 316 218 320 Z" fill="#2E9A94"/>
+<!-- Blazer lapel right -->
+<path d="M378 276 C362 262 344 260 338 268 L346 320 C364 308 382 316 386 320 Z" fill="#2E9A94"/>
+<!-- Lapel highlight lines -->
+<path d="M232 284 L254 302" stroke="rgba(255,255,255,.20)" stroke-width="2" stroke-linecap="round"/>
+<path d="M372 284 L350 302" stroke="rgba(255,255,255,.20)" stroke-width="2" stroke-linecap="round"/>
 
-<!-- Blazer button -->
-<circle cx="298" cy="340" r="3.5" fill="#248A84"/>
-<circle cx="298" cy="340" r="2" fill="#1E7A74"/>
+<!-- NECK -->
+<rect x="280" y="240" width="44" height="38" rx="20" fill="#F5C4A2"/>
 
-<!-- ===== NECK ===== -->
-<rect x="277" y="236" width="42" height="36" rx="18" fill="#FCCFA8"/>
-<rect x="283" y="236" width="30" height="10" rx="5" fill="#F8C4A0" opacity="0.4"/>
+<!-- ====== HAIR BACK (drawn BEFORE face) ====== -->
+<!-- Main hair mass - dark teal-black like the reference -->
+<!-- Top of head + back -->
+<path d="M222 182 C218 110 248 82 302 78 C356 78 382 110 380 182 C384 238 382 294 380 308 C358 272 302 264 246 272 C244 260 222 238 222 182 Z" fill="#1C2E20"/>
+<!-- Long flowing section to left shoulder (characteristic of the reference) -->
+<path d="M220 186 C202 204 192 236 190 276 C188 316 200 358 214 390 C206 360 200 320 204 280 C208 242 218 208 224 188 Z" fill="#1C2E20"/>
+<!-- More volume left side -->
+<path d="M218 190 C198 216 192 250 196 286 C200 322 214 362 228 392 C216 358 210 320 214 284 C218 248 226 214 228 192 Z" fill="#243426" opacity="0.8"/>
+<!-- Right side shorter -->
+<path d="M380 186 C394 202 400 230 396 264 C392 298 380 332 368 360 C382 332 388 298 384 264 C380 230 374 202 378 188 Z" fill="#1C2E20"/>
+<!-- Hair top volume / fringe -->
+<path d="M234 98 C252 80 276 74 302 74 C328 74 352 80 370 98 C382 112 384 134 380 154 C368 130 344 112 302 108 C260 112 236 130 222 154 C218 134 222 112 234 98 Z" fill="#243426"/>
+<!-- Hair shine streak (subtle highlight) -->
+<path d="M254 86 C280 78 324 78 348 86" stroke="#2E4430" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.55"/>
+<!-- Wave/flow detail on long left hair -->
+<path d="M196 260 C192 290 196 320 206 350" stroke="#243426" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.7"/>
 
-<!-- ===== HAIR BACK LAYER (behind face) ===== -->
-<!-- Main hair mass behind and around head -->
-<path d="M222 178 C218 112 240 84 298 80 C356 80 378 112 374 178 C378 232 378 286 378 300 C354 268 298 260 242 268 C242 256 222 232 222 178 Z" fill="url(#hairShade)"/>
-<!-- Left side hair flow (falls to the left, our right in image) -->
-<path d="M222 180 C204 196 198 224 200 262 C202 300 216 326 232 342 C222 312 214 280 216 250 C218 220 222 196 224 180 Z" fill="#131E11"/>
-<!-- Right side hair (shorter, stays close to face) -->
-<path d="M374 180 C386 196 390 220 386 256 C382 292 368 316 354 328 C368 304 376 276 374 248 C372 218 370 196 372 180 Z" fill="#1A2818"/>
-<!-- Hair flowing down to right shoulder (the long flowing part visible in the reference) -->
-<path d="M222 180 C196 200 178 240 176 288 C174 330 186 364 200 384 C196 358 192 324 196 292 C200 260 210 228 222 204 Z" fill="#131E11"/>
-<path d="M222 182 C200 208 188 244 190 284 C192 320 206 356 218 380 C208 350 202 316 204 284 C206 252 216 218 226 194 Z" fill="#1E2F1C" opacity="0.7"/>
-<!-- Extra volume on top -->
-<path d="M236 96 C250 82 270 76 298 76 C326 76 346 82 360 96 C372 108 378 126 376 146 C368 124 350 108 298 104 C246 108 228 124 220 146 C218 126 224 108 236 96 Z" fill="#1E2F1C"/>
-<!-- Hair highlights (subtle sheen) -->
-<path d="M250 90 C270 80 310 80 330 90" stroke="#2A3E28" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.6"/>
-
-<!-- ===== FACE ===== -->
-<ellipse cx="298" cy="180" rx="60" ry="65" fill="url(#skinGrad)"/>
-<!-- Cheek shading -->
-<ellipse cx="298" cy="196" rx="52" ry="56" fill="#F0B48A" opacity="0.15"/>
+<!-- ====== FACE (flat anime style) ====== -->
+<!-- Face shape - slightly wide jaw, round top, anime proportions -->
+<path d="M244 162 C244 124 270 100 302 100 C334 100 360 124 360 162 C360 204 348 232 334 244 C322 256 308 262 302 262 C296 262 282 256 270 244 C256 232 244 204 244 162 Z" fill="#F5C4A2"/>
+<!-- Cheek shading subtle -->
+<ellipse cx="258" cy="208" rx="18" ry="11" fill="#F0B48A" opacity="0.22"/>
+<ellipse cx="346" cy="208" rx="18" ry="11" fill="#F0B48A" opacity="0.22"/>
 
 <!-- Ears -->
-<ellipse cx="237" cy="188" rx="10" ry="14" fill="#F0B48A"/>
-<ellipse cx="240" cy="188" rx="6" ry="9" fill="#E8A880" opacity="0.6"/>
-<ellipse cx="359" cy="188" rx="10" ry="14" fill="#F0B48A"/>
-<ellipse cx="356" cy="188" rx="6" ry="9" fill="#E8A880" opacity="0.6"/>
+<ellipse cx="243" cy="186" rx="10" ry="13" fill="#F0B890"/>
+<ellipse cx="361" cy="186" rx="10" ry="13" fill="#F0B890"/>
 
-<!-- ===== EYEBROWS ===== -->
-<path d="M263 162 C270 156 280 155 291 158" stroke="#3A2010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-<path d="M305 158 C316 155 326 156 333 162" stroke="#3A2010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<!-- ====== EYEBROWS - flat anime thick arches ====== -->
+<path d="M264 158 C272 151 284 149 296 153" stroke="#2A1810" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M308 153 C320 149 332 151 340 158" stroke="#2A1810" stroke-width="4" fill="none" stroke-linecap="round"/>
 
-<!-- ===== EYES ===== -->
-<!-- Left eye white -->
-<ellipse cx="278" cy="176" rx="12" ry="11" fill="white"/>
-<!-- Left iris -->
-<ellipse cx="279" cy="177" rx="8" ry="8.5" fill="#2A1808"/>
-<!-- Left iris color ring -->
-<ellipse cx="279" cy="177" rx="8" ry="8.5" fill="none" stroke="#3D2010" stroke-width="1.5"/>
-<!-- Left pupil -->
-<circle cx="280" cy="177" r="5" fill="#1A0C04"/>
-<!-- Left eye highlight -->
-<circle cx="283" cy="173" r="3" fill="white"/>
-<circle cx="276" cy="175" r="1.5" fill="rgba(255,255,255,.7)"/>
-<!-- Left upper eyelid -->
-<path d="M266 171 C272 167 284 167 290 171" stroke="#2A1808" stroke-width="2" fill="none" stroke-linecap="round"/>
-<!-- Left lower eyelid subtle -->
-<path d="M268 183 C274 187 284 187 288 183" stroke="#D4956A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
-<!-- Left eyelashes (top) -->
-<line x1="267" y1="171" x2="264" y2="165" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="272" y1="168" x2="271" y2="162" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="278" y1="167" x2="278" y2="161" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="284" y1="168" x2="285" y2="162" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="289" y1="171" x2="291" y2="166" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
+<!-- ====== EYES - ANIME STYLE: large, clean, flat design ====== -->
+<!-- Left eye - anime large almond -->
+<!-- Eye white -->
+<path d="M262 180 C265 170 278 167 288 170 C296 173 300 179 298 188 C296 196 288 200 278 198 C268 196 260 190 262 180 Z" fill="white"/>
+<!-- Left iris (large, flat, characteristic anime) -->
+<ellipse cx="280" cy="184" rx="10" ry="12" fill="#2A3E78"/>
+<ellipse cx="280" cy="184" rx="10" ry="12" fill="none" stroke="#1A2860" stroke-width="1"/>
+<!-- Iris shimmer ring -->
+<ellipse cx="280" cy="186" rx="8" ry="9" fill="#3A52A0" opacity="0.5"/>
+<!-- Pupil -->
+<circle cx="280" cy="185" r="6" fill="#0A0A1A"/>
+<!-- Main highlight (large, top-left - anime style) -->
+<ellipse cx="275" cy="178" rx="4" ry="3" fill="white"/>
+<!-- Small secondary highlight -->
+<circle cx="285" cy="182" r="1.5" fill="rgba(255,255,255,.7)"/>
+<!-- Upper eyelid line (thick, anime) -->
+<path d="M262 180 C265 170 278 167 288 170 C296 173 300 179" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<!-- Lower eyelid line (thin) -->
+<path d="M262 180 C266 192 276 198 288 196" stroke="#3A2010" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+<!-- Lashes (top, anime style - few but strong) -->
+<path d="M263 180 C260 173 258 168" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M270 170 C269 163 268 158" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M279 168 C279 161 280 156" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M288 170 C290 163 292 158" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M298 178 C301 172 304 168" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
 
-<!-- Right eye white -->
-<ellipse cx="318" cy="176" rx="12" ry="11" fill="white"/>
-<!-- Right iris -->
-<ellipse cx="317" cy="177" rx="8" ry="8.5" fill="#2A1808"/>
-<ellipse cx="317" cy="177" rx="8" ry="8.5" fill="none" stroke="#3D2010" stroke-width="1.5"/>
-<circle cx="316" cy="177" r="5" fill="#1A0C04"/>
-<!-- Right highlight -->
-<circle cx="321" cy="173" r="3" fill="white"/>
-<circle cx="314" cy="175" r="1.5" fill="rgba(255,255,255,.7)"/>
-<!-- Right eyelid -->
-<path d="M306 171 C312 167 324 167 330 171" stroke="#2A1808" stroke-width="2" fill="none" stroke-linecap="round"/>
-<path d="M308 183 C314 187 324 187 328 183" stroke="#D4956A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
-<!-- Right lashes -->
-<line x1="307" y1="171" x2="304" y2="165" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="312" y1="168" x2="311" y2="162" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="318" y1="167" x2="318" y2="161" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="324" y1="168" x2="325" y2="162" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
-<line x1="329" y1="171" x2="331" y2="166" stroke="#1A0C04" stroke-width="1.8" stroke-linecap="round"/>
+<!-- Right eye - mirror -->
+<path d="M306 180 C304 170 316 167 326 170 C336 173 342 179 340 188 C338 196 330 200 320 198 C310 196 304 190 306 180 Z" fill="white"/>
+<ellipse cx="324" cy="184" rx="10" ry="12" fill="#2A3E78"/>
+<ellipse cx="324" cy="184" rx="10" ry="12" fill="none" stroke="#1A2860" stroke-width="1"/>
+<ellipse cx="324" cy="186" rx="8" ry="9" fill="#3A52A0" opacity="0.5"/>
+<circle cx="324" cy="185" r="6" fill="#0A0A1A"/>
+<ellipse cx="319" cy="178" rx="4" ry="3" fill="white"/>
+<circle cx="329" cy="182" r="1.5" fill="rgba(255,255,255,.7)"/>
+<path d="M306 180 C308 170 318 167 328 170 C336 173 340 179 340 180" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M340 180 C338 192 328 198 316 196" stroke="#3A2010" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+<path d="M306 178 C303 172 300 168" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M314 170 C313 163 312 158" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M323 168 C323 161 322 156" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M332 170 C334 163 336 158" stroke="#1A0C06" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M340 178 C343 172 346 168" stroke="#1A0C06" stroke-width="2.5" fill="none" stroke-linecap="round"/>
 
-<!-- ===== NOSE ===== -->
-<path d="M291 197 C288 204 284 208 282 208 C280 208 279 207 281 209" stroke="#D4956A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<path d="M305 197 C308 204 312 208 314 208 C316 208 317 207 315 209" stroke="#D4956A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-<path d="M284 207 C290 212 306 212 312 207" stroke="#D4956A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
-<!-- Nose tip highlight -->
-<ellipse cx="298" cy="207" rx="5" ry="3" fill="rgba(252,207,168,.4)"/>
+<!-- BLUSH (anime cheek blush, oval) -->
+<ellipse cx="258" cy="210" rx="18" ry="8" fill="rgba(238,128,100,.22)"/>
+<ellipse cx="346" cy="210" rx="18" ry="8" fill="rgba(238,128,100,.22)"/>
 
-<!-- ===== SMILE / MOUTH ===== -->
-<!-- Upper lip -->
-<path d="M278 222 C284 219 291 218 298 219 C305 218 312 219 318 222 C312 226 304 228 298 227 C292 228 284 226 278 222 Z" fill="#C87855"/>
-<!-- Lower lip -->
-<path d="M278 222 C284 228 292 232 298 232 C304 232 312 228 318 222 C312 226 304 229 298 228 C292 229 284 226 278 222 Z" fill="#D98868"/>
-<!-- Teeth hint -->
-<path d="M282 223 C288 226 308 226 314 223" fill="white" opacity="0.6"/>
-<!-- Smile arc -->
-<path d="M276 221 C284 230 312 230 320 221" stroke="#B86848" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
-<!-- Dimples -->
-<circle cx="272" cy="219" r="3.5" fill="rgba(216,136,104,.30)"/>
-<circle cx="324" cy="219" r="3.5" fill="rgba(216,136,104,.30)"/>
+<!-- NOSE - anime style: tiny, just a subtle shadow dot -->
+<path d="M295 216 C298 222 305 221 308 216" stroke="#D48862" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
 
-<!-- ===== BLUSH ===== -->
-<ellipse cx="254" cy="204" rx="16" ry="9" fill="rgba(240,130,100,.16)"/>
-<ellipse cx="342" cy="204" rx="16" ry="9" fill="rgba(240,130,100,.16)"/>
+<!-- MOUTH - anime wide happy smile -->
+<!-- Upper lip + corners -->
+<path d="M280 232 C288 228 302 228 324 232" stroke="#C87858" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+<!-- Smile arc - wide and happy like the reference -->
+<path d="M278 234 C286 246 302 252 326 246 C314 256 290 256 278 234 Z" fill="#D88868"/>
+<!-- Teeth -->
+<path d="M282 236 C288 244 316 244 322 238 C312 248 292 248 282 236 Z" fill="white" opacity="0.9"/>
+<!-- Lower lip shadow -->
+<path d="M285 248 C294 254 312 254 319 248" stroke="#C87858" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.4"/>
 
-<!-- ===== HEADPHONES ===== -->
-<!-- Headband arc - white, goes over top of hair -->
-<path d="M234 186 C236 116 262 100 298 99 C334 100 360 116 362 186" stroke="#F4F4F4" stroke-width="13" fill="none" stroke-linecap="round"/>
+<!-- ====== HEADPHONES - white/light like the reference ====== -->
+<!-- Headband arc -->
+<path d="M240 178 C242 108 268 92 302 90 C336 92 362 108 364 178" stroke="#F0F0F0" stroke-width="14" fill="none" stroke-linecap="round"/>
 <!-- Headband top highlight -->
-<path d="M237 183 C239 120 264 105 298 104 C332 105 357 120 359 183" stroke="rgba(255,255,255,.8)" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M243 175 C245 112 270 97 302 95 C334 97 359 112 361 175" stroke="rgba(255,255,255,.85)" stroke-width="5" fill="none" stroke-linecap="round"/>
 <!-- Headband shadow -->
-<path d="M235 188 C237 118 263 101 298 100 C333 101 359 118 361 188" stroke="rgba(200,200,200,.3)" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M240 180 C242 110 268 94 302 92 C336 94 362 110 364 180" stroke="rgba(0,0,0,.05)" stroke-width="3" fill="none" stroke-linecap="round"/>
 
-<!-- Left ear cup outer shell -->
-<ellipse cx="232" cy="192" rx="22" ry="26" fill="#F2F2F2"/>
-<ellipse cx="232" cy="192" rx="22" ry="26" fill="none" stroke="#E0E0E0" stroke-width="1.5"/>
-<!-- Left ear cup cushion ring -->
-<ellipse cx="232" cy="192" rx="17" ry="20" fill="#E8E8E8"/>
-<!-- Left ear cup inner (salmon/pink cushion) -->
-<ellipse cx="232" cy="192" rx="13" ry="15" fill="#EDAA90"/>
-<!-- Left ear cup center button -->
-<circle cx="232" cy="192" r="5" fill="#E09478"/>
-<circle cx="230" cy="190" r="2" fill="rgba(255,255,255,.4)"/>
+<!-- Left ear cup - white outer + salmon inner like the reference -->
+<ellipse cx="238" cy="186" rx="23" ry="27" fill="#F4F4F4"/>
+<ellipse cx="238" cy="186" rx="23" ry="27" fill="none" stroke="#E4E4E4" stroke-width="1.5"/>
+<ellipse cx="238" cy="186" rx="17" ry="20" fill="#EBEBEB"/>
+<ellipse cx="238" cy="186" rx="13" ry="15" fill="#ECA890"/>
+<circle cx="238" cy="186" r="5.5" fill="#E09078"/>
+<circle cx="235" cy="183" r="2" fill="rgba(255,255,255,.5)"/>
 
-<!-- Right ear cup outer shell -->
-<ellipse cx="364" cy="192" rx="22" ry="26" fill="#F2F2F2"/>
-<ellipse cx="364" cy="192" rx="22" ry="26" fill="none" stroke="#E0E0E0" stroke-width="1.5"/>
-<!-- Right ear cup cushion ring -->
-<ellipse cx="364" cy="192" rx="17" ry="20" fill="#E8E8E8"/>
-<!-- Right ear cup inner -->
-<ellipse cx="364" cy="192" rx="13" ry="15" fill="#EDAA90"/>
-<circle cx="364" cy="192" r="5" fill="#E09478"/>
-<circle cx="362" cy="190" r="2" fill="rgba(255,255,255,.4)"/>
+<!-- Right ear cup -->
+<ellipse cx="366" cy="186" rx="23" ry="27" fill="#F4F4F4"/>
+<ellipse cx="366" cy="186" rx="23" ry="27" fill="none" stroke="#E4E4E4" stroke-width="1.5"/>
+<ellipse cx="366" cy="186" rx="17" ry="20" fill="#EBEBEB"/>
+<ellipse cx="366" cy="186" rx="13" ry="15" fill="#ECA890"/>
+<circle cx="366" cy="186" r="5.5" fill="#E09078"/>
+<circle cx="363" cy="183" r="2" fill="rgba(255,255,255,.5)"/>
 
-<!-- ===== FLOATING ELEMENTS ===== -->
+<!-- =============================================
+     FLOATING UI ELEMENTS (animated)
+     ============================================= -->
 
-<!-- CAMEROON FLAG (circular) -->
-<g class="svgfa" filter="url(#s1)">
-  <circle cx="152" cy="106" r="44" fill="white"/>
-  <circle cx="152" cy="106" r="44" fill="none" stroke="white" stroke-width="5"/>
-  <!-- Flag stripes clipped to circle -->
-  <rect x="112" y="68" width="27" height="76" fill="#007A5E" clip-path="url(#flagClip)"/>
-  <rect x="139" y="68" width="27" height="76" fill="#CE1126" clip-path="url(#flagClip)"/>
-  <rect x="166" y="68" width="27" height="76" fill="#FCD116" clip-path="url(#flagClip)"/>
-  <!-- Star -->
-  <text x="152" y="112" text-anchor="middle" font-size="18" fill="#FCD116" font-family="Arial">&#9733;</text>
-  <!-- Outer ring shadow -->
-  <circle cx="152" cy="106" r="44" fill="none" stroke="rgba(58,175,169,.20)" stroke-width="2.5"/>
+<!-- CAMEROON FLAG - circular badge -->
+<g class="ia" filter="url(#sd1)">
+  <!-- White circle base + shadow -->
+  <circle cx="155" cy="110" r="46" fill="white"/>
+  <!-- Flag stripes (clipped) -->
+  <rect x="115" y="72" width="27" height="76" fill="#007A5E" clip-path="url(#flg)"/>
+  <rect x="142" y="72" width="27" height="76" fill="#CE1126" clip-path="url(#flg)"/>
+  <rect x="169" y="72" width="27" height="76" fill="#FCD116" clip-path="url(#flg)"/>
+  <!-- Star on red -->
+  <text x="155" y="116" text-anchor="middle" font-size="19" fill="#FCD116" font-family="Arial">&#9733;</text>
+  <!-- Ring border -->
+  <circle cx="155" cy="110" r="46" fill="none" stroke="white" stroke-width="5"/>
+  <circle cx="155" cy="110" r="46" fill="none" stroke="rgba(58,175,169,.22)" stroke-width="2"/>
 </g>
 
-<!-- CHAT BUBBLE 1 (large, with text lines) -->
-<g class="svgfb" filter="url(#s2)">
-  <!-- Bubble body -->
-  <rect x="384" y="96" width="112" height="74" rx="18" fill="#3AAFA9"/>
-  <!-- Bottom left tail -->
-  <path d="M396 170 L380 192 L420 170 Z" fill="#3AAFA9"/>
-  <!-- Text lines inside -->
-  <rect x="400" y="115" width="80" height="7" rx="3.5" fill="rgba(255,255,255,.92)"/>
-  <rect x="400" y="129" width="66" height="6" rx="3" fill="rgba(255,255,255,.72)"/>
-  <rect x="400" y="142" width="52" height="6" rx="3" fill="rgba(255,255,255,.55)"/>
+<!-- CHAT BUBBLE 1 - large, 3 text lines like reference -->
+<g class="ib" filter="url(#sd2)">
+  <rect x="388" y="98" width="116" height="76" rx="18" fill="#3AAFA9"/>
+  <path d="M400 174 L382 196 L424 174 Z" fill="#3AAFA9"/>
+  <rect x="404" y="118" width="84" height="8" rx="4" fill="rgba(255,255,255,.92)"/>
+  <rect x="404" y="133" width="70" height="6" rx="3" fill="rgba(255,255,255,.72)"/>
+  <rect x="404" y="146" width="56" height="6" rx="3" fill="rgba(255,255,255,.55)"/>
 </g>
 
-<!-- CHAT BUBBLE 2 (smaller, three dots) -->
-<g class="svgfa" style="animation-delay:.95s" filter="url(#s2)">
-  <rect x="378" y="208" width="94" height="56" rx="16" fill="#3AAFA9"/>
-  <path d="M390 264 L374 284 L414 264 Z" fill="#3AAFA9"/>
-  <!-- Three dots -->
-  <circle cx="403" cy="236" r="7" fill="rgba(255,255,255,.92)"/>
-  <circle cx="425" cy="236" r="7" fill="rgba(255,255,255,.92)"/>
-  <circle cx="447" cy="236" r="7" fill="rgba(255,255,255,.92)"/>
+<!-- CHAT BUBBLE 2 - three dots -->
+<g class="ia" style="animation-delay:.95s" filter="url(#sd2)">
+  <rect x="380" y="210" width="100" height="58" rx="16" fill="#3AAFA9"/>
+  <path d="M392 268 L374 290 L420 268 Z" fill="#3AAFA9"/>
+  <circle cx="406" cy="239" r="7.5" fill="rgba(255,255,255,.92)"/>
+  <circle cx="430" cy="239" r="7.5" fill="rgba(255,255,255,.92)"/>
+  <circle cx="454" cy="239" r="7.5" fill="rgba(255,255,255,.92)"/>
 </g>
 
 <!-- CHECK BADGE -->
-<g class="svgfc" filter="url(#s1)">
-  <circle cx="492" cy="136" r="28" fill="white"/>
-  <circle cx="492" cy="136" r="28" fill="none" stroke="#E0F4F2" stroke-width="2"/>
-  <!-- Check mark tick -->
-  <path d="M480 136 L489 146 L505 122" stroke="#3AAFA9" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="ic" filter="url(#sd1)">
+  <circle cx="498" cy="138" r="30" fill="white"/>
+  <circle cx="498" cy="138" r="30" fill="none" stroke="#DEF2F1" stroke-width="2"/>
+  <path d="M485 138 L494 149 L512 122" stroke="#3AAFA9" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 
-<!-- Decorative background dots -->
-<circle cx="165" cy="60" r="7" fill="rgba(58,175,169,.28)" class="svgfb"/>
-<circle cx="472" cy="76" r="5.5" fill="rgba(58,175,169,.22)" class="svgfa"/>
-<circle cx="136" cy="208" r="4.5" fill="rgba(58,175,169,.18)" class="svgfc"/>
-<circle cx="484" cy="310" r="4" fill="rgba(58,175,169,.16)" class="svgfb"/>
-<circle cx="106" cy="148" r="5" fill="rgba(58,175,169,.14)" class="svgfa"/>
+<!-- Decorative dots -->
+<circle cx="168" cy="62" r="7" fill="rgba(58,175,169,.28)" class="ib"/>
+<circle cx="478" cy="76" r="5.5" fill="rgba(58,175,169,.22)" class="ia"/>
+<circle cx="138" cy="218" r="4.5" fill="rgba(58,175,169,.18)" class="ic"/>
+<circle cx="488" cy="322" r="4" fill="rgba(58,175,169,.16)" class="ib"/>
+<circle cx="108" cy="150" r="5" fill="rgba(58,175,169,.14)" class="ia"/>
 </svg>
   </div>
 </section>
 
-<!-- ============ SECTIONS PILLS ============ -->
+<!-- SECTION PILLS -->
 <div class="sections-strip" id="sections">
   <a href="ChoixTest.aspx?section=Listening" class="section-pill">
     <i class="fa-solid fa-headphones"></i> Listening
@@ -618,13 +482,13 @@
   </a>
 </div>
 
-<!-- ============ FEATURE CARDS ============ -->
+<!-- CARDS -->
 <div class="cards-section">
   <div class="card">
     <div class="card-icon-wrap"><i class="fa-solid fa-headphones-simple"></i></div>
     <div class="card-body">
       <div class="card-title">Comprehension Orale</div>
-      <p class="card-desc">Entrainez-vous a comprendre le Yemba parle a travers des exercices audio cibles et progressifs.</p>
+      <p class="card-desc">Entrainez-vous a comprendre le Yemba parle a travers des exercices audio cibles.</p>
       <a href="ChoixTest.aspx?section=Listening" class="card-link">Commencer <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -632,7 +496,7 @@
     <div class="card-icon-wrap"><i class="fa-solid fa-book"></i></div>
     <div class="card-body">
       <div class="card-title">Grammaire &amp; Structure</div>
-      <p class="card-desc">Maitrisez la syntaxe et les regles grammaticales de la langue Yemba en profondeur.</p>
+      <p class="card-desc">Maitrisez la syntaxe et les regles grammaticales de la langue Yemba.</p>
       <a href="ChoixTest.aspx?section=Structure" class="card-link">Commencer <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -646,7 +510,7 @@
   </div>
 </div>
 
-<!-- ============ FOOTER ============ -->
+<!-- FOOTER -->
 <footer>
   <span class="footer-brand">TLC Yemba Online Test</span>
   <div class="footer-links">
@@ -665,11 +529,9 @@
 </div>
 </form>
 <script>
-    document.querySelectorAll('.nav-links a').forEach(function (l) {
-        if (l.href === window.location.href) {
-            l.style.color = 'var(--teal)'; l.style.background = 'var(--teal-pale)';
-        }
-    });
+document.querySelectorAll('.nav-links a').forEach(function(l){
+  if(l.href===window.location.href){l.style.color='var(--teal)';l.style.background='var(--teal-pale)';}
+});
 </script>
 </body>
 </html>

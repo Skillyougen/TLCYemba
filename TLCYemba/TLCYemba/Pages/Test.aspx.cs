@@ -1,273 +1,197 @@
-// ═══════════════════════════════════════════════════════════════════════
-//  TLC YEMBA — PARTIE 3 : Test QCM + Chronomètre
-//  Fichier  : Pages/Test.aspx.cs
-//  Namespace: TLC_Yemba.Pages
-//  Couche   : UI — n'appelle que la BLL, jamais la DAL directement
-// ═══════════════════════════════════════════════════════════════════════
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using TLC_Yemba.BLL;
-using TLC_Yemba.Models;
+using TLCYemba.BLL;
+using TLCYemba.Models;
+using TLCYemba.BLL;
+using TLC_Yemba.Pages;
 
-namespace TLC_Yemba.Pages
+namespace TLCYemba
 {
+    /// <summary>
+    /// Page de test QCM chronométré — Couche UI.
+    /// Respecte la règle d'or : UI appelle uniquement la BLL.
+    /// </summary>
     public partial class Test : Page
     {
-        // ── Clés Session ─────────────────────────────────────────────
-        private const string SESS_QUESTIONS  = "Test_Questions";
-        private const string SESS_INDEX      = "Test_IndexCourant";
-        private const string SESS_REPONSES   = "Test_Reponses";
-        private const string SESS_HEURE_DEB  = "HeureDebutTest";
-        private const string SESS_TYPE_TEST  = "TypeTest";
-        private const string SESS_TEST_ID    = "TestID";
-        private const string SESS_USER_ID    = "UtilisateurID";
+        // ── Propriétés exposées au JavaScript via <%= %> ──
+        public int    NbQuestions  { get; private set; }
+        public int    IndexCourant { get; private set; }
+        public int    DureeMinutes { get; private set; }
+        public string AnsweredJSON { get; private set; }
 
-        // ── Propriétés helpers ────────────────────────────────────────
-        private List<Question> Questions
-        {
-            get => Session[SESS_QUESTIONS] as List<Question>;
-            set => Session[SESS_QUESTIONS] = value;
-        }
+        // ── BLL ──
+        private readonly TestService _service = new TestService();
 
-        private int IndexCourant
-        {
-            get => Session[SESS_INDEX] is int i ? i : 0;
-            set => Session[SESS_INDEX] = value;
-        }
+        // ── Clé de session pour l'index courant ──
+        private const string SK_INDEX = "QuestionActuelle";
 
-        private Dictionary<int, string> Reponses
-        {
-            get
-            {
-                if (Session[SESS_REPONSES] == null)
-                    Session[SESS_REPONSES] = new Dictionary<int, string>();
-                return (Dictionary<int, string>)Session[SESS_REPONSES];
-            }
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // PAGE LOAD
-        // ─────────────────────────────────────────────────────────────
+        // ────────────────────────────────────────────────────
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Vérifier qu'un type de test a été sélectionné
-            if (Session[SESS_TYPE_TEST] == null)
+            // Vérifier que le type de test est en session
+            if (Session["TypeTest"] == null)
             {
-                Response.Redirect("~/Pages/ChoixTest.aspx");
+                Response.Redirect("ChoixTest.aspx");
                 return;
             }
+
+            string typeTest = Session["TypeTest"].ToString();
+            NbQuestions  = Session["NbQuestions"] != null ? (int)Session["NbQuestions"] : 0;
+            DureeMinutes = Session["DureeMinutes"] != null ? (int)Session["DureeMinutes"] : 30;
 
             if (!IsPostBack)
             {
-                ChargerQuestions();
-                InitialiserChronometre();
-                IndexCourant = 0;
+                // Premier chargement : initialiser l'index à 0
+                Session[SK_INDEX] = 0;
+                InitialiserReponses();
             }
 
-            AfficherQuestion(IndexCourant);
-        }
+            // Lire l'index courant
+            IndexCourant = Session[SK_INDEX] != null ? (int)Session[SK_INDEX] : 0;
 
-        // ─────────────────────────────────────────────────────────────
-        // CHARGEMENT DES QUESTIONS via BLL
-        // UI → BLL.TestService.ChargerQuestions() → DAL.QuestionRepository
-        // ─────────────────────────────────────────────────────────────
-        private void ChargerQuestions()
-        {
-            string typeTest = Session[SESS_TYPE_TEST]?.ToString();
-            int testId      = Session[SESS_TEST_ID] is int id ? id : 1;
-
-            // === APPEL BLL (jamais DAL directement) ===
-            var questions = TestService.ChargerQuestions(typeTest, testId);
-
-            if (questions == null || questions.Count == 0)
+            // Charger la question via BLL
+            var q = _service.GetQuestion(typeTest, IndexCourant);
+            if (q == null)
             {
-                // Fallback : rediriger si aucune question
-                Session["ErreurTest"] = "Aucune question disponible pour ce test.";
-                Response.Redirect("~/Pages/ChoixTest.aspx");
+                Response.Redirect("Resultat.aspx");
                 return;
             }
 
-            Questions = questions;
+            // Remplir l'UI
+            AfficherQuestion(q, IndexCourant, NbQuestions, typeTest);
+
+            // JSON des index déjà répondus (pour les dots JS)
+            AnsweredJSON = BuildAnsweredJSON();
+
+            // Label info navigation
+            lblQInfo.Text = string.Format(
+                "<i class='fa-solid fa-flag' style='margin-right:5px;color:var(--teal)'></i>" +
+                "Question {0} sur {1}", IndexCourant + 1, NbQuestions);
         }
 
-        // ─────────────────────────────────────────────────────────────
-        // INITIALISATION DU CHRONOMÈTRE
-        // ─────────────────────────────────────────────────────────────
-        private void InitialiserChronometre()
-        {
-            string typeTest = Session[SESS_TYPE_TEST]?.ToString();
-
-            // Durée en secondes via BLL
-            int dureeSecondes = TestService.ObtenirDureeSecondes(typeTest);
-            hdnSecondesRestantes.Value = dureeSecondes.ToString();
-
-            // Heure de début si pas encore définie
-            if (Session[SESS_HEURE_DEB] == null)
-                Session[SESS_HEURE_DEB] = DateTime.Now;
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // AFFICHAGE D'UNE QUESTION
-        // ─────────────────────────────────────────────────────────────
-        private void AfficherQuestion(int index)
-        {
-            var questions = Questions;
-            if (questions == null || questions.Count == 0) return;
-
-            // Sécuriser les bornes
-            index = Math.Max(0, Math.Min(index, questions.Count - 1));
-            IndexCourant = index;
-
-            var q = questions[index];
-
-            // ── Labels de navigation ──────────────────────────────────
-            litSection.Text      = Session[SESS_TYPE_TEST]?.ToString() ?? "Test";
-            litTitreTest.Text    = Session[SESS_TYPE_TEST]?.ToString() ?? "Test";
-            litIndexAffiche.Text = (index + 1).ToString();
-            litTotal.Text        = questions.Count.ToString();
-            litNumQuestion.Text  = (index + 1).ToString();
-            litEnonce.Text       = Server.HtmlEncode(q.Enonce);
-
-            // ── Injecter données pour le JS ───────────────────────────
-            litSecondes.Text      = hdnSecondesRestantes.Value;
-            litTotalJS.Text       = questions.Count.ToString();
-            litIndexJS.Text       = (index + 1).ToString();
-            litReponsesCount.Text = Reponses.Count.ToString();
-
-            // ── Options QCM ───────────────────────────────────────────
-            phOptions.Controls.Clear();
-            var choix = new[] {
-                ("A", q.ChoixA),
-                ("B", q.ChoixB),
-                ("C", q.ChoixC),
-                ("D", q.ChoixD)
-            };
-
-            string reponseExistante = Reponses.ContainsKey(q.QuestionID)
-                                      ? Reponses[q.QuestionID]
-                                      : "";
-
-            foreach (var (lettre, texte) in choix)
-            {
-                bool selected = reponseExistante == lettre;
-
-                // Label cliquable
-                var label = new HtmlGenericControl("label");
-                label.Attributes["class"] = "option-label" + (selected ? " selected" : "");
-
-                // Radio input caché
-                var radio = new HtmlInputRadioButton();
-                radio.Name     = "qcm_reponse";
-                radio.Value    = lettre;
-                radio.Checked  = selected;
-                radio.Attributes["class"] = "option-radio-input";
-
-                // Cercle custom
-                var cercle = new HtmlGenericControl("span");
-                cercle.Attributes["class"] = "option-radio-custom";
-
-                // Lettre
-                var spanLettre = new HtmlGenericControl("span");
-                spanLettre.Attributes["class"] = "option-lettre";
-                spanLettre.InnerText = lettre + ".";
-
-                // Texte
-                var spanTexte = new HtmlGenericControl("span");
-                spanTexte.Attributes["class"] = "option-texte";
-                spanTexte.InnerText = texte;
-
-                label.Controls.Add(radio);
-                label.Controls.Add(cercle);
-                label.Controls.Add(spanLettre);
-                label.Controls.Add(spanTexte);
-                phOptions.Controls.Add(label);
-            }
-
-            // ── Points de navigation (nav dots) ──────────────────────
-            phNavDots.Controls.Clear();
-            for (int i = 0; i < questions.Count; i++)
-            {
-                var dot = new HtmlGenericControl("span");
-                string css = "nav-dot";
-                if (i == index)                                   css += " current";
-                else if (Reponses.ContainsKey(questions[i].QuestionID)) css += " answered";
-                dot.Attributes["class"] = css;
-                dot.Attributes["title"] = $"Question {i + 1}";
-                phNavDots.Controls.Add(dot);
-            }
-
-            // ── Boutons navigation ────────────────────────────────────
-            btnPrecedent.Visible = (index > 0);
-            btnSuivant.Text      = (index == questions.Count - 1) ? "Dernière →" : "Suivant →";
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // SAUVEGARDER LA RÉPONSE DE LA QUESTION COURANTE
-        // ─────────────────────────────────────────────────────────────
-        private void SauvegarderReponse()
-        {
-            string valeur = hdnReponseSelectionnee.Value?.Trim().ToUpper();
-            if (string.IsNullOrEmpty(valeur)) return;
-
-            var questions = Questions;
-            if (questions == null || IndexCourant >= questions.Count) return;
-
-            int questionId = questions[IndexCourant].QuestionID;
-            var reponses   = Reponses;
-
-            if (valeur == "A" || valeur == "B" || valeur == "C" || valeur == "D")
-                reponses[questionId] = valeur;
-
-            Session[SESS_REPONSES] = reponses;
-
-            // Mettre à jour le chrono depuis le hidden field
-            if (int.TryParse(hdnSecondesRestantes.Value, out int sec))
-                hdnSecondesRestantes.Value = sec.ToString();
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // BOUTON SUIVANT
-        // ─────────────────────────────────────────────────────────────
+        // ────────────────────────────────────────────────────
         protected void btnSuivant_Click(object sender, EventArgs e)
         {
             SauvegarderReponse();
-            var questions = Questions;
-            if (questions != null && IndexCourant < questions.Count - 1)
-                IndexCourant++;
-            AfficherQuestion(IndexCourant);
+            int idx = (int)Session[SK_INDEX];
+            if (idx < NbQuestions - 1)
+                Session[SK_INDEX] = idx + 1;
+            else
+                Response.Redirect("Resultat.aspx");
         }
 
-        // ─────────────────────────────────────────────────────────────
-        // BOUTON PRÉCÉDENT
-        // ─────────────────────────────────────────────────────────────
         protected void btnPrecedent_Click(object sender, EventArgs e)
         {
             SauvegarderReponse();
-            if (IndexCourant > 0)
-                IndexCourant--;
-            AfficherQuestion(IndexCourant);
+            int idx = (int)Session[SK_INDEX];
+            if (idx > 0)
+                Session[SK_INDEX] = idx - 1;
         }
 
-        // ─────────────────────────────────────────────────────────────
-        // BOUTON TERMINER (bouton caché + confirmation JS)
-        // ─────────────────────────────────────────────────────────────
         protected void btnTerminer_Click(object sender, EventArgs e)
         {
             SauvegarderReponse();
+            Response.Redirect("Resultat.aspx");
+        }
 
-            // Calculer la durée réelle en secondes
-            DateTime heureDebut = Session[SESS_HEURE_DEB] is DateTime hd ? hd : DateTime.Now;
-            int dureeReelle     = (int)(DateTime.Now - heureDebut).TotalSeconds;
+        // ── Helpers privés ────────────────────────────────
 
-            // Stocker les données pour Resultat.aspx (Partie 4)
-            Session["Test_Reponses"]    = Reponses;
-            Session["Test_DureeReelle"] = dureeReelle;
+        private void InitialiserReponses()
+        {
+            if (Session["Reponses"] == null)
+                Session["Reponses"] = new Dictionary<int, string>();
+        }
 
-            // Redirection vers la page de résultats (Partie 4)
-            Response.Redirect("~/Pages/Resultat.aspx");
+        private void SauvegarderReponse()
+        {
+            // Lire la valeur du HiddenField
+            string val = hfReponse.Value;
+            if (!string.IsNullOrEmpty(val))
+            {
+                int idx = (int)Session[SK_INDEX];
+                var rep = (Dictionary<int, string>)Session["Reponses"];
+                rep[idx] = val;
+                Session["Reponses"] = rep;
+            }
+        }
+
+        private void AfficherQuestion(
+            Models.Question q, int index, int total, string typeTest)
+        {
+            // Numero et section
+            litNumero.Text    = (index + 1).ToString();
+            litSection.Text   = typeTest;
+            litSectionTag.Text = q.Section;
+            litTotalModal.Text = total.ToString();
+
+            // Libelle section badge icon
+            string icon = q.Section == "Listening" ? "fa-headphones" :
+                          q.Section == "Structure"  ? "fa-pen-nib" : "fa-book-open";
+            lblSectionBadge.Text = string.Format(
+                "<i class='fa-solid {0}'></i>&nbsp;{1}", icon, q.Section);
+
+            // Audio (Listening)
+            if (q.HasAudio)
+            {
+                pnlAudio.CssClass = "audio-panel";
+                string audioUrl = ResolveUrl("~/" + q.FichierAudio);
+                ClientScript.RegisterStartupScript(GetType(), "loadAudio",
+                    string.Format(
+                        "document.getElementById('audioSrc').src='{0}';" +
+                        "document.getElementById('audioPlayer').load();",
+                        audioUrl), true);
+            }
+            else
+            {
+                pnlAudio.CssClass = "audio-panel hidden";
+            }
+
+            // Texte de la question
+            litEnonce.Text  = q.Enonce;
+            litChoixA.Text  = q.ChoixA;
+            litChoixB.Text  = q.ChoixB;
+            litChoixC.Text  = q.ChoixC;
+            litChoixD.Text  = q.ChoixD;
+
+            // Restaurer la réponse déjà saisie
+            var rep = (Dictionary<int, string>)Session["Reponses"];
+            if (rep != null && rep.ContainsKey(index))
+            {
+                string prev = rep[index];
+                rdA.Checked = (prev == "A");
+                rdB.Checked = (prev == "B");
+                rdC.Checked = (prev == "C");
+                rdD.Checked = (prev == "D");
+                hfReponse.Value = prev;
+            }
+            else
+            {
+                rdA.Checked = rdB.Checked = rdC.Checked = rdD.Checked = false;
+                hfReponse.Value = "";
+            }
+
+            // Boutons navigation
+            btnPrecedent.Enabled = (index > 0);
+            bool isLast = (index == total - 1);
+            btnSuivant.Visible = !isLast;
+            btnTerminer.Visible = isLast;
+        }
+
+        private string BuildAnsweredJSON()
+        {
+            var rep = Session["Reponses"] as Dictionary<int, string>;
+            if (rep == null || rep.Count == 0) return "[]";
+            var sb = new System.Text.StringBuilder("[");
+            bool first = true;
+            foreach (var k in rep.Keys)
+            {
+                if (!first) sb.Append(",");
+                sb.Append(k);
+                first = false;
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

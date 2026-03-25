@@ -1,38 +1,242 @@
-﻿// ─────────────────────────────────────────────────────────────
-//  FICHIER AUTO-GÉNÉRÉ — Test.aspx.designer.cs
-//  Ne pas modifier manuellement en temps normal.
-// ─────────────────────────────────────────────────────────────
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
+﻿//------------------------------------------------------------------------------
+// <généré automatiquement>
+//     Ce code a été généré par un outil.
+//
+//     Les changements apportés à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
+//     le code est régénéré.
+// </généré automatiquement>
+//------------------------------------------------------------------------------
 
-namespace TLC_Yemba.Pages
+namespace TLCYemba
 {
+
+
     public partial class Test
     {
-        protected global::System.Web.UI.WebControls.Literal litTitreTest;
+
+        /// <summary>
+        /// Contrôle form1.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// Contrôle lblSectionBadge.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSectionBadge;
+
+        /// <summary>
+        /// Contrôle litSection.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSection;
-        protected global::System.Web.UI.WebControls.Literal litIndexAffiche;
-        protected global::System.Web.UI.WebControls.Literal litTotal;
-        protected global::System.Web.UI.WebControls.Literal litNumQuestion;
+
+        /// <summary>
+        /// Contrôle litQNum.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litQNum;
+
+        /// <summary>
+        /// Contrôle litQTotal.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litQTotal;
+
+        /// <summary>
+        /// Contrôle litNumero.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litNumero;
+
+        /// <summary>
+        /// Contrôle litSectionTag.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSectionTag;
+
+        /// <summary>
+        /// Contrôle pnlAudio.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAudio;
+
+        /// <summary>
+        /// Contrôle pnlEnonce.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEnonce;
+
+        /// <summary>
+        /// Contrôle litEnonce.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litEnonce;
-        protected global::System.Web.UI.WebControls.Literal litSecondes;
-        protected global::System.Web.UI.WebControls.Literal litTotalJS;
-        protected global::System.Web.UI.WebControls.Literal litIndexJS;
-        protected global::System.Web.UI.WebControls.Literal litReponsesCount;
 
-        protected global::System.Web.UI.WebControls.Panel pnlQuestion;
+        /// <summary>
+        /// Contrôle rdA.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdA;
 
-        protected global::System.Web.UI.WebControls.PlaceHolder phOptions;
-        protected global::System.Web.UI.WebControls.PlaceHolder phNavDots;
+        /// <summary>
+        /// Contrôle litChoixA.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChoixA;
 
+        /// <summary>
+        /// Contrôle rdB.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdB;
+
+        /// <summary>
+        /// Contrôle litChoixB.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChoixB;
+
+        /// <summary>
+        /// Contrôle rdC.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdC;
+
+        /// <summary>
+        /// Contrôle litChoixC.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChoixC;
+
+        /// <summary>
+        /// Contrôle rdD.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdD;
+
+        /// <summary>
+        /// Contrôle litChoixD.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litChoixD;
+
+        /// <summary>
+        /// Contrôle btnPrecedent.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrecedent;
-        protected global::System.Web.UI.WebControls.Button btnSuivant;
-        protected global::System.Web.UI.WebControls.Button btnTerminerHidden;
 
-        protected global::System.Web.UI.WebControls.HiddenField hdnReponseSelectionnee;
-        protected global::System.Web.UI.WebControls.HiddenField hdnDureeEcoulee;
-        protected global::System.Web.UI.WebControls.HiddenField hdnSecondesRestantes;
-        protected global::System.Web.UI.WebControls.HiddenField hdnActionTerminer;
+        /// <summary>
+        /// Contrôle lblQInfo.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQInfo;
+
+        /// <summary>
+        /// Contrôle btnSuivant.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSuivant;
+
+        /// <summary>
+        /// Contrôle btnTerminer.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTerminer;
+
+        /// <summary>
+        /// Contrôle hfReponse.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfReponse;
+
+        /// <summary>
+        /// Contrôle litTotalModal.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTotalModal;
+
+        /// <summary>
+        /// Contrôle btnSubmitFinal.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubmitFinal;
     }
 }
